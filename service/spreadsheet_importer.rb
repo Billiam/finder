@@ -31,10 +31,18 @@ class SpreadsheetImporter
       )
 
       if point.valid?
-        point.save
+        points << point
       else
-        loggy.warn "Invalid row: #{point.errors.full_messages}" unless point.valid?
+        loggy.warn "Invalid row: #{point.errors.full_messages}"
       end
     end
+
+    update, insert = points.partition(&:persisted?)
+
+    Request.collection.insert(insert.map(&:as_document)) unless insert.empty?
+    update.each(&:save)
+
+    loggy.debug "New Requests: (#{insert.length}), Updated Requests: (#{update.length})"
+
   end
 end
