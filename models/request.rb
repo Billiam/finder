@@ -15,7 +15,7 @@ class Request
     uniqueness: true
 
   validates :search,
-    present: true
+    presence: true
 
   validates :status,
     inclusion: STATUSES

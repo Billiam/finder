@@ -22,27 +22,19 @@ class SpreadsheetImporter
         next
       end
 
-      if Point.where(name: row['username']).exists?
-        loggy.warn "#{row['username']} already exists"
-        next
-      end
-
-
       loggy.debug "Importing: #{row['username']}"
 
-      point = Request.new(
-        name:    row['username'],
+      point = Request.find_or_initialize_by(name: row['username'])
+      point.assign_attributes(
         search:  location.join(', '),
         pm:      false,
       )
 
       if point.valid?
-        points << point.as_document
+        point.save
       else
-        loggy.warn "Invalid row: #{point}" unless point.valid?
+        loggy.warn "Invalid row: #{point.errors.full_messages}" unless point.valid?
       end
     end
-
-    Request.collection.insert(points) unless points.empty?
   end
 end
