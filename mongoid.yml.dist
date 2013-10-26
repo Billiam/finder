@@ -1,0 +1,6 @@
+development:
+  sessions:
+    default:
+      database: alfinder
+      hosts:
+        - localhost:27017

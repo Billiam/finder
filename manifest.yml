@@ -1,0 +1,18 @@
+---
+applications:
+  .:
+    name: alfinder
+    framework:
+      name: sinatra
+      info:
+        mem: 256M
+        description: Sinatra Application
+        exec: 
+    infra: aws
+    url: ${name}.${target-base}
+    mem: 256M
+    depends-on: ./manifest-worker.yml
+    instances: 4
+    services:
+      redis:
+        type: redis

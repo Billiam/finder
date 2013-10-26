@@ -1,0 +1,17 @@
+body {
+    background: url(/img/bg.png);
+}
+.main {
+    padding-top: 20px;
+    background: #fff;
+}
+.map {
+    height: 450px;
+}
+.attribution {
+    line-height: 2;
+    font-size: 0.8em;
+}
+.leaflet-container {
+    background: white;
+}

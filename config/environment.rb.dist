@@ -1,0 +1,4 @@
+ENV['MAPQUEST_KEY'] = ''
+ENV['USERNAME'] = ''
+ENV['PASSWORD'] = ''
+ENV['LOG_LEVEL'] = 'DEBUG'

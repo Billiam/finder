@@ -1,0 +1,30 @@
+<div class="row collapse">
+  <div class="twelve columns">
+    <div class="map" id="map"></div>
+  </div>
+</div>
+<div class="twelve columns">
+  <div class="attribution">Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a></div>
+  <table>
+    <thead>
+    <tr>
+      <th width="200">Name</th>
+      <th>City</th>
+      <th width="150">County</th>
+      <th width="175">State</th>
+      <th width="200">Country</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @points.limit(100).each do |point| %>
+    <tr>
+      <td><a href="http://www.reddit.com/u/<%= point.name %>"><%= point.name %></a></td>
+      <td><%= point.city %></td>
+      <td><%= point.county %></td>
+      <td><%= point.state %></td>
+      <td><%= point.country %></td>
+    </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
