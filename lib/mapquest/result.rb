@@ -40,7 +40,8 @@ module Mapquest
     #define state, country, methods
     Location.constants(false).each do |c|
       define_method :"#{c.downcase}" do
-        self.result[Location.const_get(c)]
+        val = self.result[Location.const_get(c)]
+        val == '' ? nil : val
       end
     end
   end

@@ -37,7 +37,7 @@ Bundler.require(:default, PADRINO_ENV)
 # Add your before (RE)load hooks here
 #
 Padrino.before_load do
-  Padrino.set_load_paths Padrino.root('service')
+  Padrino.set_load_paths Padrino.root('service'), Padrino.root('app/jobs')
 end
 
 ##

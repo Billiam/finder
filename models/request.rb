@@ -20,6 +20,8 @@ class Request
   validates :status,
     inclusion: STATUSES
 
+  scope :ready, where(status: 'new')
+
   # You can define indexes on documents using the index macro:
   # index :field <, :unique => true>
 

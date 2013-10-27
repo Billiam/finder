@@ -31,8 +31,6 @@ module Mapquest
   end
 
   def geocode(locations)
-    loggy.debug %Q(Geocoding: #{locations.values.join("\n----\n")})
-
     #create username to nil hash to return
     results = Hash[locations.keys.zip()]
 
