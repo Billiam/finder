@@ -13,7 +13,12 @@
   <!--[if lte IE 8]>
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
   <![endif]-->
+
+  <link rel="stylesheet" href="css/MarkerCluster.css" />
+  <link rel="stylesheet" href="css/MarkerCluster.Default.css" />
+  <!--[if lte IE 8]><link rel="stylesheet" href="css/MarkerCluster.Default.ie.css" /><![endif]-->
   <link rel="stylesheet" href="css/app.css" />
+
 
   <script src="js/vendor/custom.modernizr.js"></script>
 
@@ -25,12 +30,13 @@
 
 <script>
   document.write('<script src=' +
-          ('__proto__' in {} ? 'js/vendor/jquery' : 'js/vendor/jquery') +
+          ('__proto__' in {} ? 'js/vendor/zepto' : 'js/vendor/jquery') +
           '.js><\/script>')
 </script>
 
-<script src="js/foundation.min.js"></script>
+<script src="js/vendor/foundation.min.js"></script>
 <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+<script src="js/vendor/leaflet.markercluster.js"></script>
 <script src="js/app.tmp.js"></script>
 
 <!--

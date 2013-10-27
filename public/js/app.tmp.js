@@ -12,6 +12,13 @@ $(function() {
         attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.'
     }).addTo(map);
 
+    var markers = new L.MarkerClusterGroup();
+    for (i=0,l=point_data.length; i < l; i++) {
+        var datum = point_data[i];
+        markers.addLayer(L.marker([datum.lat,datum.lng], {title: datum.names.join("\n")}));
+    }
+    map.addLayer(markers);
+
     //export for debugging
     window.map = map;
 });

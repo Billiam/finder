@@ -4,6 +4,7 @@ AlFinder::App.controllers :points do
   get :index, map: '/' do
     @title = ''
     @points = Point.all
+    @markers = Point.cluster
     render 'points/index'
   end
   # get :index, :map => '/foo/bar' do

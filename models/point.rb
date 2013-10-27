@@ -26,6 +26,31 @@ class Point
 
   index({name: 1}, {unique: true})
 
+  def self.cluster(zoom=nil)
+
+    map = %q(
+      function() {
+        var lat = this.location[1];
+        var lng = this.location[0];
+        emit([lat, lng].toString(), { names: [this.name], lat: lat, lng: lng });
+      }
+    )
+
+    reduce = %q(
+      function(key, values) {
+        var result = { names: [], lat: 0, lng: 0 };
+        values.forEach(function(value) {
+          result.names = result.names.concat(value.names);
+          result.lat = value.lat;
+          result.lng = value.lng;
+        });
+
+        return result;
+      }
+    )
+    map_reduce(map, reduce).out(inline: true).map { |i| i['value'] }
+  end
+
   def self.bulk_upsert(rows)
     update, insert = rows.partition(&:persisted?)
     collection.insert(insert.map(&:as_document)) unless insert.empty?
