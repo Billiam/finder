@@ -15,3 +15,48 @@ body {
 .leaflet-container {
     background: white;
 }
+
+/* Customize marker cluster display */
+.marker-cluster-small {
+    width: 26px !important;
+    height: 26px !important;
+    margin-left: -13px !important;
+    margin-top: -13px !important;
+}
+.marker-cluster-small div {
+    width: 18px;
+    height: 18px;
+    margin-left: 4px;
+    margin-top: 4px;
+}
+.marker-cluster-small span {
+    line-height: 18px;
+}
+.marker-cluster-medium {
+    width: 32px !important;
+    height: 32px !important;
+    margin-left: -16px !important;
+    margin-top: -16px !important;
+}
+.marker-cluster-medium div {
+    width: 24px;
+    height: 24px;
+    margin-left: 4px;
+    margin-top: 4px;
+}
+.marker-cluster-medium span {
+    line-height: 24px;
+}
+.marker-cluster span {
+    color:white;
+}
+.point-icon {
+    background-color: rgba(120, 10, 10, .8);
+    border-radius: 8px;
+    border: 2px solid white;
+}
+
+.marker-cluster,
+.marker-cluster div {
+    background-color: rgba(120, 10, 10, 0.6);
+}

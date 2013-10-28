@@ -51,6 +51,27 @@ class Point
     map_reduce(map, reduce).out(inline: true).map { |i| i['value'] }
   end
 
+  def location_name
+    @location_name ||= [city, county, state, country].reject(&:nil?).join(', ')
+  end
+
+  def to_s
+    location_name
+  end
+
+  def as_json(*args)
+    #if args.first == :markers
+      {
+        name: name,
+        lat: location.y,
+        long: location.x,
+        location: location_name,
+      }
+    #else
+    #  super
+    #end
+  end
+
   def self.bulk_upsert(rows)
     update, insert = rows.partition(&:persisted?)
     collection.insert(insert.map(&:as_document)) unless insert.empty?
