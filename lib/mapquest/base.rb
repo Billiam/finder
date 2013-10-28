@@ -10,6 +10,14 @@ module Mapquest
   query_string_normalizer QueryNormalizer::UNSORTED_NORMALIZER
   base_uri 'open.mapquestapi.com/geocoding/v1'
 
+  def default_query
+    {
+      thumbMaps: false,
+      maxResults: 1,
+      key: ENV['MAPQUEST_KEY']
+    }
+  end
+
   def geocode_coarse(locations)
     # hash of user => geocoded address (or nil)
     addresses = geocode locations
@@ -47,7 +55,7 @@ module Mapquest
     address_list = query.keys
 
     #send query
-    response = get('/batch', query: { location: address_list, key: ENV['MAPQUEST_KEY'] })
+    response = get('/batch', query: default_query.merge( location: address_list ))
 
     unless response.success?
       loggy.warn "Could not geocode addresses: #{response.code}"

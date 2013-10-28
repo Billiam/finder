@@ -16,14 +16,18 @@
     </tr>
     </thead>
     <tbody>
-    <% @points.limit(100).each do |point| %>
-    <tr id="user_<%= point.name %>">
-      <td><a href="http://www.reddit.com/u/<%= point.name %>"><%= point.name %></a></td>
-      <td><%= point.city %></td>
-      <td><%= point.county %></td>
-      <td><%= point.state %></td>
-      <td><%= point.country %></td>
-    </tr>
+    <% if @points.limit(100).each do |point| %>
+      <tr id="user_<%= point.name %>">
+        <td><a href="http://www.reddit.com/u/<%= point.name %>"><%= point.name %></a></td>
+        <td><%= point.city %></td>
+        <td><%= point.county %></td>
+        <td><%= point.state %></td>
+        <td><%= point.country %></td>
+      </tr>
+    <% end.empty? %>
+      <tr>
+        <td colspan="5">No registered locations</td>
+      </tr>
     <% end %>
     </tbody>
   </table>

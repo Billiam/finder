@@ -5,7 +5,7 @@ $(function() {
         center: [10, -15],
         zoom: 2,
         minZoom: 1,
-        maxZoom: 12,
+        maxZoom: 11,
         worldCopyJump: true,
         inertiaMaxSpeed: 1000
     });
@@ -14,16 +14,22 @@ $(function() {
         attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.'
     }).addTo(map);
 
-    var simpleIcon = L.divIcon({className: 'point-icon', iconSize: [16, 16]});
+    var simpleIcon = L.divIcon({
+        className: 'point-icon',
+        iconSize: [18, 18],
+        html: '<div></div>'
+    });
 
     // Marker layer
     var markers = new L.MarkerClusterGroup({
         showCoverageOnHover: false,
-        maxClusterRadius: 60
+        maxClusterRadius: 41
     });
 
     var markerList = $.map(point_data, function(dat, i) {
-        return L.marker([dat.lat, dat.long], {title: dat.name + " - " + dat.location, icon: simpleIcon});
+        var popup = '<strong>' + dat.name + '</strong><br />' + dat.location;
+
+        return L.marker([dat.lat, dat.long], {title: dat.name + " - " + dat.location, icon: simpleIcon}).bindPopup(popup);
     });
     markers.addLayers(markerList);
     map.addLayer(markers);

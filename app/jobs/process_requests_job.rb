@@ -22,6 +22,8 @@ class ProcessRequestsJob
     #convert messages array to author => message
     request_data = Hash[requests.map{ |m| [m.name, m.search] } ]
 
+    loggy.debug "Parsing #{requests.length} requests"
+
     # map requests to hash of username => geocoded info
     addresses = Mapquest.geocode_coarse(request_data).reject { |k, v| v.nil? }
 
@@ -42,6 +44,7 @@ class ProcessRequestsJob
       point
     end
 
+    loggy.debug "Inserting #{results.length} points"
     Point.bulk_upsert results
 
     requests.each(&:delete)

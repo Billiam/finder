@@ -1,7 +1,7 @@
 module Mapquest
   module QueryNormalizer
     UNSORTED_NORMALIZER = Proc.new do |query|
-      Array(query).map do |key, value|
+      Array(query).sort_by { |a| a[0].to_s }.map do |key, value|
         if value.nil?
           key.to_s
         elsif value.is_a?(Array)
