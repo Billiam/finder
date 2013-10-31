@@ -2,12 +2,14 @@ define(function(require) {
 
     var leaflet = require('leaflet');
     require('leaflet.markercluster');
+    require('leaflet.hash');
+
     var $ = require('jquery');
 
     var Map = function(selector, options) {
         var map = null;
         var icon = null;
-
+        var hash = null;
         this.init(selector, options);
     };
 
@@ -24,6 +26,7 @@ define(function(require) {
     Map.prototype.init = function(selector, options) {
         this.map = leaflet.map(selector, $.extend({}, defaultOptions, options));
         this.tiles().addTo(this.map);
+        this.hash = new leaflet.Hash(this.map);
     };
 
     Map.prototype.addPoints = function(markers) {

@@ -1,6 +1,7 @@
 define(function(require) {
     var $ = require('jquery');
-    require('datatables.foundation');
+    var dataTables = require('jquery.dataTables');
+    var foundation = require('dataTables.foundation');
 
     var Table = function(selector, options) {
         var table = null;
@@ -11,14 +12,14 @@ define(function(require) {
 
     Table.prototype.init = function(selector, options) {
         this.table = $(selector).dataTable({
+            "aLengthMenu": [[10, 100, 500, -1], [10, 100, 500, "All"]],
             "aoColumnDefs": [
                 {
                     "mRender": function (data, type, row ) {
-                        console.log(data);
                         return '<a href="http://reddit.com/u/' + data + '">' + data + '</a>';
                     },
                     "aTargets": [0]
-                },
+                }
             ]
         });
     };
