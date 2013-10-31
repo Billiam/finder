@@ -1,10 +1,14 @@
 AlFinder::App.controllers :points do
   layout :application
 
-  get :index, map: '/' do
+  get :index, map: '/', provides: [:html, :csv] do
     @title = ''
-    @points = Point.all
-    render 'points/index'
+    case content_type
+      when :csv then
+         Point.all.to_csv
+      else
+        render 'points/index'
+    end
   end
   # get :index, :map => '/foo/bar' do
   #   session[:foo] = 'bar'

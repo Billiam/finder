@@ -8,14 +8,14 @@
   <title>AL Finder</title>
 
 
-  <link rel="stylesheet" href="css/foundation.css">
+  <link rel="stylesheet" href="css/foundation.min.css">
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
   <!--[if lte IE 8]>
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
   <![endif]-->
-
   <link rel="stylesheet" href="css/MarkerCluster.css" />
   <link rel="stylesheet" href="css/MarkerCluster.Default.css" />
+  <link rel="stylesheet" href="js/vendor/datatables/dataTables.foundation.css" />
   <!--[if lte IE 8]><link rel="stylesheet" href="css/MarkerCluster.Default.ie.css" /><![endif]-->
   <link rel="stylesheet" href="css/app.css" />
 
@@ -28,55 +28,27 @@
 <%= yield %>
 </div>
 
-<script>
-  document.write('<script src=' +
-          ('__proto__' in {} ? 'js/vendor/zepto' : 'js/vendor/jquery') +
-          '.js><\/script>')
-</script>
-
+<% if false %>
+<script src="js/vendor/jquery.min.js"></script>
 <script src="js/vendor/foundation.min.js"></script>
-<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
-<script src="js/vendor/leaflet.markercluster.js"></script>
-<script src="js/app.tmp.js"></script>
+<script src="js/vendor/leaflet/leaflet.js"></script>
+<script src="js/vendor/leaflet/leaflet.markercluster.js"></script>
+<script src="js/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="js/vendor/datatables/dataTables.foundation.js"></script>
+<script src="js/app.js"></script>
+<script src="js/build/bundle.js"></script>
+<% end %>
 
-<!--
-
-<script src="js/foundation/foundation.js"></script>
-
-<script src="js/foundation/foundation.alerts.js"></script>
-
-<script src="js/foundation/foundation.clearing.js"></script>
-
-<script src="js/foundation/foundation.cookie.js"></script>
-
-<script src="js/foundation/foundation.dropdown.js"></script>
-
-<script src="js/foundation/foundation.forms.js"></script>
-
-<script src="js/foundation/foundation.joyride.js"></script>
-
-<script src="js/foundation/foundation.magellan.js"></script>
-
-<script src="js/foundation/foundation.orbit.js"></script>
-
-<script src="js/foundation/foundation.reveal.js"></script>
-
-<script src="js/foundation/foundation.section.js"></script>
-
-<script src="js/foundation/foundation.tooltips.js"></script>
-
-<script src="js/foundation/foundation.topbar.js"></script>
-
-<script src="js/foundation/foundation.interchange.js"></script>
-
-<script src="js/foundation/foundation.placeholder.js"></script>
-
-<script src="js/foundation/foundation.abide.js"></script>
-
--->
-
+<script src="js/src/vendor/require.js"></script>
+<script src="js/src/config.js"></script>
 <script>
-  $(document).foundation();
+  require.config(
+  {
+    baseUrl: 'js/<%= Padrino.env == :production ? 'build' : 'src' %>/',
+    waitSeconds: 120
+  }
+  );
+  require(['main']);
 </script>
 </body>
 </html>

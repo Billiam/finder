@@ -5,7 +5,7 @@
 </div>
 <div class="twelve columns">
   <div class="attribution">Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a></div>
-  <table>
+  <table class="datatable">
     <thead>
     <tr>
       <th width="200">Name</th>
@@ -16,6 +16,7 @@
     </tr>
     </thead>
     <tbody>
+    <% if false %>
     <% if @points.limit(100).each do |point| %>
       <tr id="user_<%= point.name %>">
         <td><a href="http://www.reddit.com/u/<%= point.name %>"><%= point.name %></a></td>
@@ -28,6 +29,7 @@
       <tr>
         <td colspan="5">No registered locations</td>
       </tr>
+    <% end %>
     <% end %>
     </tbody>
   </table>

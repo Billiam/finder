@@ -59,17 +59,36 @@ class Point
     location_name
   end
 
-  def as_json(*args)
-    #if args.first == :markers
-      {
-        name: name,
-        lat: location.y,
-        long: location.x,
-        location: location_name,
-      }
-    #else
-    #  super
-    #end
+  def self.csv_columns
+    [:name, :latitude, :longitude, :city, :county, :state, :country, :place]
+  end
+  def as_csv
+    export_attributes
+  end
+
+  def export_attributes
+    {
+      name: name,
+      latitude: location.y,
+      longitude: location.x,
+      city: city,
+      state: state,
+      county: county,
+      country: country,
+      place: location_name,
+    }
+  end
+
+  def self.to_csv
+    require 'csv'
+
+    CSV.generate do |csv|
+      csv << csv_columns
+
+      each do |i|
+        csv << i.as_csv.values
+      end
+    end
   end
 
   def self.bulk_upsert(rows)
