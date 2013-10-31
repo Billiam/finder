@@ -5,6 +5,7 @@
 define(function(require) {
     'use strict';
     require('polyfills/function.bind');
+    require('foundation');
 
     var $ = require('jquery');
     var Map = require('controller/map');
@@ -20,6 +21,10 @@ define(function(require) {
 
     };
 
+    App.prototype.initFoundation = function() {
+        $(document).foundation();
+    };
+
     /**
      * Initializes the application and kicks off loading of prerequisites.
      *
@@ -27,8 +32,11 @@ define(function(require) {
      * @private
      */
     App.prototype.init = function() {
+        this.initFoundation();
+
         var map = new Map('map', {});
         var table = new Table('.datatable');
+
         Point.all().done(function(points) {
             map.addPoints(points);
             table.setData(points.toTable());

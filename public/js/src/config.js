@@ -5,7 +5,8 @@ require.config({
         'leaflet.markercluster': 'vendor/leaflet/leaflet.markercluster',
         'leaflet.hash': 'vendor/leaflet/leaflet-hash',
         'jquery.dataTables': 'vendor/datatables/jquery.dataTables.min',
-        'dataTables.foundation': 'vendor/datatables/dataTables.foundation'
+        'dataTables.foundation': 'vendor/datatables/dataTables.foundation',
+        'foundation': 'vendor/foundation.min'
     },
     shim: {
         'jquery': { exports: '$' },
