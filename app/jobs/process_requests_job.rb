@@ -38,6 +38,7 @@ class ProcessRequestsJob
         country:  data.country,
         location: { lat: data.lat, lng: data.long },
       )
+      point.created_at ||= Time.now
 
       loggy.warn "Invalid point: #{point.errors.full_messages}" unless point.valid?
 
