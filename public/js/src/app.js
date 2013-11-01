@@ -11,6 +11,7 @@ define(function(require) {
     var Map = require('controller/map');
     var Point = require('model/point');
     var Table = require('controller/table');
+    var ExternalLinks = require('lib/externalLinks');
     /**
      * Initial application setup.
      *
@@ -33,9 +34,14 @@ define(function(require) {
      */
     App.prototype.init = function() {
         this.initFoundation();
-
+        ExternalLinks.init();
         var map = new Map('#map', {});
-        var table = new Table('.datatable');
+
+        var table = new Table('.datatable', {
+            drawCallback: function(a) {
+                ExternalLinks.init(this);
+            }
+        });
 
         Point.all().done(function(points) {
             map.addPoints(points);

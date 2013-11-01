@@ -104,3 +104,9 @@ body {
     -webkit-border-radius: 0;
     border-radius: 0;
 }
+a.external-link {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    background: transparent url(../img/external.gif) no-repeat scroll;
+}

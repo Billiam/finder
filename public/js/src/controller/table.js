@@ -18,13 +18,15 @@ define(function(require) {
     };
 
     Table.prototype.init = function(selector, options) {
-        this.table = $(selector).dataTable({
+        var $table = $(selector);
+        this.table = $table.dataTable({
             "aLengthMenu": [[50, 100, 500, -1], [50, 100, 500, "All"]],
             "iDisplayLength": 50,
+            "fnDrawCallback": options.drawCallback.bind($table),
             "aoColumnDefs": [
                 {
                     "mRender": function (data, type, row ) {
-                        return '<span class="point-user" data-name="' + data + '">' + data + '</span> <a rel="external" href="http://reddit.com/u/' + data + '"></a>';
+                        return '<span class="point-user" data-name="' + data + '">' + data + '</span> <a rel="external" href="http://www.reddit.com/u/' + data + '"></a>';
                     },
                     "aTargets": [0]
                 }
