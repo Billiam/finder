@@ -10,6 +10,9 @@ define(function(require) {
         init: function(data) {
             this.items = data;
         },
+        data: function() {
+            return this.items;
+        },
         first: function() {
             this.reset();
             return this.next();

@@ -34,7 +34,7 @@ define(function(require) {
     App.prototype.init = function() {
         this.initFoundation();
 
-        var map = new Map('map', {});
+        var map = new Map('#map', {});
         var table = new Table('.datatable');
 
         Point.all().done(function(points) {

@@ -71,6 +71,12 @@ body {
 .marker-cluster {
     background-color: rgba(215, 50, 50, 0.7);
 }
+.point-icon.highlighted {
+    background-color: rgba(255, 180, 0, 0.7);
+}
+.point-icon.highlighted div {
+    background-color: rgba(255, 140, 0, 0.8);
+}
 .leaflet-container a.leaflet-popup-close-button {
     display: none;
 }
@@ -85,4 +91,16 @@ body {
 .leaflet-popup-tip {
     color: #ddd;
     background-color: rgba(20, 20, 20, 0.95);
+}
+
+.point-user {
+    cursor: pointer;
+}
+
+.leaflet-control-minimap {
+    border:1px solid #222;
+    box-shadow: 0 1px 7px #000;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    border-radius: 0;
 }
