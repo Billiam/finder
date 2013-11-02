@@ -58,6 +58,7 @@ define(function(require) {
         var map = this;
         var markerList = markers.map(function(dat) {
             var popup = '<strong>' + dat.get('name') + '</strong><br />' + dat.get('place');
+            var options = { autoPan: false };
 
             var marker = new Marker(
                 [dat.get('latitude'), dat.get('longitude')],
@@ -65,7 +66,7 @@ define(function(require) {
                     title: dat.get('name') + " - " + dat.get('place'),
                     icon: icon
                 }
-            ).bindPopup(popup);
+            ).bindPopup(popup, options);
 
             map.markerHash[dat.get('name')] = marker;
 
@@ -97,9 +98,13 @@ define(function(require) {
         if ( ! newMarker) {
             return false;
         }
+//        this.map.setView(newMarker.getLatLng(), this.map.getMaxZoom());
+//            newMarker.openPopup();
         this.setHighlight(newMarker);
+
         this.clusterGroup.zoomToShowLayer(newMarker, function(){
             newMarker.highlight();
+            newMarker.openPopup();
         });
     };
 

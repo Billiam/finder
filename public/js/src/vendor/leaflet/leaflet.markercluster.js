@@ -355,12 +355,6 @@
                     this.off('animationend', showMarker, this);
 
                     if (layer._icon) {
-                        // center on the pre-spiderfy or original lat/lng position
-                        if (layer._preSpiderfyLatlng) {
-                            this._map.panTo(layer._preSpiderfyLatlng);
-                        } else if (layer._latlng) {
-                            this._map.panTo(layer._latlng);
-                        }
                         callback();
                     } else if (layer.__parent._icon) {
                         var afterSpiderfy = function () {
@@ -1723,6 +1717,7 @@
                     delete m._spiderLeg;
                 }
             }
+            group._spiderfied = null;
         }
     });
 
@@ -1965,11 +1960,9 @@
 
             if (this._map.options.zoomAnimation) {
                 this._map.on('zoomstart', this._unspiderfyZoomStart, this);
-            } else {
-                //Browsers without zoomAnimation don't fire zoomstart
-                this._map.on('zoomend', this._unspiderfyWrapper, this);
             }
-
+            //Browsers without zoomAnimation or a big zoom don't fire zoomstart
+            this._map.on('zoomend', this._noanimationUnspiderfy, this);
             if (L.Path.SVG && !L.Browser.touch) {
                 this._map._initPathRoot();
                 //Needs to happen in the pageload, not after, or animations don't work in webkit
