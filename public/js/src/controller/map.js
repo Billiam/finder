@@ -99,8 +99,8 @@ define(function(require) {
         }
         this.setHighlight(newMarker);
         this.clusterGroup.zoomToShowLayer(newMarker, function(){
+            newMarker.highlight();
         });
-        newMarker.highlight();
     };
 
     Map.prototype.minimap = function() {
