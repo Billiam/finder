@@ -11,6 +11,10 @@ require.config({
     },
     shim: {
         'jquery': { exports: '$' },
+        'foundation': {
+            exports: '$.fn.foundation',
+            deps: ['jquery']
+        },
         'leaflet.markercluster': {
             exports: 'L.MarkerClusterGroup',
             deps: ['leaflet']
