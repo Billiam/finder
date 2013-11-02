@@ -5,6 +5,7 @@ module AlFinder
     register Padrino::Mailer
     register Padrino::Helpers
 
+    register Padrino::Cache
     enable :sessions
 
     ##
