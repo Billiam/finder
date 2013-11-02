@@ -1,0 +1,57 @@
+<ul class="nav nav-tabs">
+  <li class="<%= 'active' if @filter == :unmoderated %>"><%= link_to tag_icon('question-sign', pat(:pending_moderation)), url(:points, :index, filter: :unmoderated) %></li>
+  <li class="<%= 'active' if @filter == :enabled %>"><%= link_to tag_icon('thumbs-up', pat(:enabled)), url(:points, :index, filter: :enabled) %></li>
+  <li class="<%= 'active' if @filter == :disabled %>"><%= link_to tag_icon('thumbs-down', pat(:disabled)), url(:points, :index, filter: :disabled) %></li>
+</ul>
+<div class=tabs-content>
+  <table id=list class="table table-striped table-hover table-condensed">
+    <thead>
+      <tr>
+        <th class=header> <%= mat(:point, :created_at) %></th>
+        <th class=header> <%= mat(:point, :updated_at) %></th>
+        <th class=header> <%= mat(:point, :name) %></th>
+        <th class=header> <%= mat(:point, :status) %></th>
+        <th class=header> <%= mat(:point, :country) %></th>
+        <th class=header> <%= mat(:point, :county) %></th>
+        <th class=header> <%= mat(:point, :city) %></th>
+        <th class=header> <%= mat(:point, :state) %></th>
+        <th class="header list-row-action-header"></th>
+    </thead>
+
+    <tbody>
+      <% @points.each do |point| %>
+        <tr class=list-row>
+          <td class=list-column> <%= time_ago_in_words point.created_at %></td>
+          <td class=list-column> <%= time_ago_in_words point.updated_at %></td>
+          <td class=list-column> <%= point.name %> </td>
+          <td class=list-column> <%= point.status %> </td>
+          <td class=list-column> <%= point.country %> </td>
+          <td class=list-column> <%= point.county %> </td>
+          <td class=list-column> <%= point.city %> </td>
+          <td class=list-column> <%= point.state %> </td>
+          <td class="list-column list-row-action">
+            <div class='list-row-action-wrapper'>
+
+              <% unless @filter == :enabled %>
+                <% button_to 'Approve', url(:points, :update, :id => point.id, page: params[:page], filter: @filter, point: {status: 'approved'}), class: 'form-action', :method => :put  do |i| %>
+                  <button title="Approve" type="submit" class="btn btn-success btn-xs">
+                    <span class="glyphicon glyphicon-thumbs-up"></span>
+                  </button>
+                <% end %>
+              <% end %>
+
+
+              <% unless @filter == :disabled %>
+                <% button_to 'Deny', url(:points, :update, :id => point.id, page: params[:page], filter: @filter, point: {status: 'denied' }), class: 'form-action', :method => :put  do |i| %>
+                  <button title="Deny" type="submit" class="btn btn-danger btn-xs <%= 'disabled' if point.disabled? %>">
+                    <span class="glyphicon glyphicon-thumbs-down"></span>
+                  </button>
+                <% end %>
+              <% end %>
+            </div>
+          </td>
+      <% end %>
+    </tbody>
+  </table>
+  <%= will_paginate @points, renderer: BootstrapPagination::Sinatra %>
+</div>

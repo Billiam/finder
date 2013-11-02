@@ -37,6 +37,10 @@ Bundler.require(:default, PADRINO_ENV)
 # Add your before (RE)load hooks here
 #
 Padrino.before_load do
+  require 'will_paginate'
+  require 'will_paginate_mongoid'
+  require 'will_paginate/view_helpers/sinatra'
+  include WillPaginate::Sinatra::Helpers
   Padrino.set_load_paths Padrino.root('service'), Padrino.root('app/jobs')
 end
 

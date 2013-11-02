@@ -35,6 +35,8 @@ end
 
 # Padrino Stable Gem
 gem 'padrino', '0.11.4'
+gem "will_paginate_mongoid", "~> 2.0.1", require: false
+gem "will_paginate-bootstrap", "~> 1.0.0", require: false
 
 # Or Padrino Edge
 # gem 'padrino', :github => 'padrino/padrino-framework'

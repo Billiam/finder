@@ -21,6 +21,8 @@ module AlFinder
     # layout  :my_layout              # Layout can be in views/layouts/foo.ext or views/foo.ext (default :application)
     #
 
+    require 'will_paginate-bootstrap'
+
     set :admin_model, 'Account'
     set :login_page,  '/admin/sessions/new'
 
@@ -32,8 +34,13 @@ module AlFinder
       role.allow   '/sessions'
     end
 
+    access_control.roles_for :content_manager do |role|
+      role.project_module :points, '/points'
+    end
+
     access_control.roles_for :admin do |role|
-    role.project_module :accounts, '/accounts'
+      role.project_module :points, '/points'
+      role.project_module :accounts, '/accounts'
     end
 
     # Custom error management 

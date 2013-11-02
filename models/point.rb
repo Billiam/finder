@@ -5,6 +5,10 @@ class Point
   include Mongoid::Timestamps # adds created_at and updated_at fields
   include Mongoid::Geospatial
 
+  attr_accessible :status, as: :moderator
+  attr_accessible :name, :status, :location, :country, :county, :city, :state, as: :admin
+
+
   # field <name>, :type => <type>, :default => <value>
   field :name, type: String
 
@@ -25,6 +29,32 @@ class Point
     inclusion: STATUSES
 
   index({name: 1}, {unique: true})
+
+  scope :enabled, where(status: 'approved')
+  scope :unmoderated, where(status: 'pending')
+  scope :disabled, where(status: 'denied')
+
+  def self.valid_filter?(type)
+    %w(enabled unmoderated disabled).include? type.to_s
+  end
+
+  def self.get_filter(type)
+    return type.to_sym if valid_filter? type
+
+    :enabled
+  end
+
+  def self.filter(type)
+    public_send get_filter(type)
+  end
+
+  def active?
+    status == 'approved'
+  end
+
+  def disabled?
+    status == 'denied'
+  end
 
   def self.cluster(zoom=nil)
 
@@ -62,6 +92,7 @@ class Point
   def self.csv_columns
     [:name, :latitude, :longitude, :city, :county, :state, :country, :place]
   end
+
   def as_csv
     export_attributes
   end

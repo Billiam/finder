@@ -28,7 +28,9 @@ class SpreadsheetImporter
       point.assign_attributes(
         search:  location.join(', '),
         pm:      false,
+        status:  'approved',
       )
+      point.created_at ||= Time.now
 
       if point.valid?
         points << point

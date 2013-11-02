@@ -1,5 +1,6 @@
 module AlFinder
   class App < Padrino::Application
+    register WillPaginate::Sinatra
     register Padrino::Rendering
     register Padrino::Mailer
     register Padrino::Helpers
