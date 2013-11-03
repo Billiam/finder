@@ -98,8 +98,6 @@ define(function(require) {
         if ( ! newMarker) {
             return false;
         }
-//        this.map.setView(newMarker.getLatLng(), this.map.getMaxZoom());
-//            newMarker.openPopup();
         this.setHighlight(newMarker);
 
         this.clusterGroup.zoomToShowLayer(newMarker, function(){

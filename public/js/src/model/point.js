@@ -44,10 +44,9 @@ define(function(require) {
      */
     var parseData = function(csv) {
         var points = [];
-        var parsed = CsvParser(csv, {});
-        var rows = parsed.results.rows;
-        for (var i = 0, l = rows.length; i<l; i++) {
-            points.push(new Point(rows[i]));
+        var parsed = CsvParser.toObjects(csv);
+        for (var i = 0, l = parsed.length; i<l; i++) {
+            points.push(new Point(parsed[i]));
         }
         return points;
     };

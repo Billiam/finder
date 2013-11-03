@@ -1,0 +1,45 @@
+/* IE 6-8 fallback colors */
+.point-icon div,
+.marker-cluster div {
+    background-color: rgb(141, 22, 22);
+}
+.point-icon,
+.marker-cluster {
+    background-color: rgb(227, 111, 111);
+}
+.point-icon.highlighted {
+    background-color: rgb(244, 193, 73);
+}
+.point-icon.highlighted div {
+    background-color: rgb(240, 143, 14);
+}
+
+
+.leaflet-popup {
+    padding-bottom: 20px;
+}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+    background-color: rgb(20, 20, 20);
+}
+.leaflet-popup-tip-container {
+    overflow: hidden;
+    background: none;
+    position: absolute;
+    bottom: 1px;
+    right: 0;
+    left: 0;
+}
+
+.leaflet-popup-tip {
+    border-bottom: 0;
+    background: none;
+    border-top: 20px solid rgb(20, 20, 20);
+    border-right: 20px solid transparent;
+    border-left: 20px solid transparent;
+    width: 17px;
+    height: 17px;
+    padding: 1px;
+
+    margin: -10px auto 0;
+}
