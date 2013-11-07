@@ -4,35 +4,28 @@ namespace :assets do
     Rake::Task[task].invoke
   end
 
-  task :test_browserify do
+  task :test_node do
     begin
-      `browserify -v`
+      `node -v`
     rescue Errno::ENOENT
       STDERR.puts <<-EOM
-        Unable to find 'browserify' on the current path.
+        Unable to find 'node' on the current path.
       EOM
       exit 1
     end
   end
 
   namespace :precompile do
-    task :all => ["assets:precompile:browserify",
+    task :all => ["assets:precompile:rjs",
                   "assets:precompile:less"]
 
-    task :external => ["assets:test_browserify"] do
+    task :external => ["assets:test_node"] do
       Rake::Task["assets:precompile:all"].invoke
     end
 
-    task :browserify => :environment do
-      res = %x[ cd #{Padrino.root('public','js')} && browserify -r browserify-shim #{Padrino.root('public','js', 'app')} > #{Padrino.root('public','js','build','bundle.js')} ]
-      raise RuntimeError, "JS compilation with browserify.js failed. \n #{res}" unless $?.success?
-    end
-
-    task :rjs do
-      `cd public/js; ../../bin/node lib/r.js -o build.js`
-      unless $?.success?
-        raise RuntimeError, "JS compilation with r.js failed."
-      end
+    task :rjs => :environment do
+      res = %x[cd #{Padrino.root('public/js/src')} && node #{Padrino.root('build/r.js')} -o mainConfigFile=config.js baseUrl=. name=vendor/almond.js include=main out=../build/app.js optimize=uglify2]
+      raise RuntimeError, "JS compilation with r.js failed. \n #{res}" unless $?.success?
     end
 
     task :less do

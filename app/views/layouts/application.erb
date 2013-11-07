@@ -29,17 +29,7 @@
 <%= yield %>
 </div>
 
-<% if false %>
-<script src="js/vendor/jquery.min.js"></script>
-<script src="js/vendor/foundation.min.js"></script>
-<script src="js/vendor/leaflet/leaflet.js"></script>
-<script src="js/vendor/leaflet/leaflet.markercluster.js"></script>
-<script src="js/vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="js/vendor/datatables/dataTables.foundation.js"></script>
-<script src="js/app.js"></script>
-<script src="js/build/bundle.js"></script>
-<% end %>
-
+<% if true %>
 <script src="js/src/vendor/require.js"></script>
 <script src="js/src/config.js"></script>
 <script>
@@ -51,5 +41,8 @@
   );
   require(['main']);
 </script>
+<% else %>
+  <script src="js/build/app.js"></script>
+<% end %>
 </body>
 </html>
