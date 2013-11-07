@@ -16,30 +16,3 @@ Mongoid::Config.sessions =
   else
     {default: {hosts: ["#{host}:#{port}"], database: database_name}}
   end
-
-# If you want to use a YML file for config, use this instead:
-#
-#   Mongoid.load!(File.join(Padrino.root, 'config', 'database.yml'), Padrino.env)
-#
-# And add a config/database.yml file like this:
-#   development:
-#     sessions:
-#       default:
-#         database: al_finder_development
-#         hosts:
-#           - localhost:27017
-#   production:
-#     sessions:
-#       default:
-#         database: al_finder_production
-#         hosts:
-#           - localhost:27017
-#   test:
-#     sessions:
-#       default:
-#         database: al_finder_test
-#         hosts:
-#           - localhost:27017
-#
-#
-# More installation and setup notes are on http://mongoid.org/en/mongoid/docs/installation.html#configuration

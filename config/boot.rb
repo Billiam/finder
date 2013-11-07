@@ -3,12 +3,13 @@ PADRINO_ENV  = ENV['PADRINO_ENV'] ||= ENV['RACK_ENV'] ||= 'development'  unless 
 PADRINO_ROOT = File.expand_path('../..', __FILE__) unless defined?(PADRINO_ROOT)
 
 # Load our dependencies
-require_relative 'environment.rb'
 require 'rubygems' unless defined?(Gem)
 require 'bundler/setup'
 
-
 Bundler.require(:default, PADRINO_ENV)
+
+app_env = Padrino.root('config/environment.rb')
+load(app_env) if File.exists?(app_env)
 
 ##
 # ## Enable devel logging
