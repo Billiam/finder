@@ -1,6 +1,4 @@
 source 'https://rubygems.org'
-ruby "1.9.3"
-
 # Server requirements
 # gem 'thin' # or mongrel
 # gem 'trinidad', :platform => 'jruby'
@@ -19,13 +17,8 @@ gem "mongoid_geospatial", "~> 2.8.2"
 
 gem 'snoo', require: false
 gem 'httparty', require: false
-gem 'clockwork', require: false
-gem 'thin'
 #required to resolve mongoid geospatial vs padrino dependencies
 gem "activesupport", "~> 3.2.15", require: false
-
-
-gem "resque", "~> 1.25.1", require: false
 
 # Test requirements
 group :development, :test do
