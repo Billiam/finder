@@ -8,4 +8,5 @@ vendor/gems/*
 db/*.db
 .*.sw*
 config/environment.rb
-public/js/build/app.js
+public/build/*
+!public/build/.gitkeep

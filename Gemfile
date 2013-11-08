@@ -22,7 +22,6 @@ gem 'httparty', require: false
 gem 'clockwork', require: false
 #required to resolve mongoid geospatial vs padrino dependencies
 gem "activesupport", "~> 3.2.15", require: false
-
 # Test requirements
 group :development, :test do
   gem 'rspec'

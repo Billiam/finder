@@ -9,7 +9,7 @@ use Rack::ExclusionDeflater, :exclude => proc { |env|
   env['REQUEST_PATH'] =~ /\.(jpg|jpeg|png|gif)\z/
 }
 use Rack::Static,
-    :urls => ["/js", "/css", "/img"],
+    :urls => ["/build", "/js", "/css", "/img"],
     :root => "public",
     :header_rules => [
        [:all, {'Cache-Control' => 'public, max-age=31536000'}],

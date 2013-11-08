@@ -1,4 +1,10 @@
 namespace :assets do
+  def asset_config
+    @asset_config ||= begin
+      require 'yaml'
+      YAML.load Padrino.root('config/assets.yml')
+    end
+  end
 
   def invoke_or_reboot_rake_task(task)
     Rake::Task[task].invoke
@@ -17,15 +23,28 @@ namespace :assets do
 
   namespace :precompile do
     task :all => ["assets:precompile:rjs",
-                  "assets:precompile:less"]
+                  "assets:precompile:css"]
 
     task :external => ["assets:test_node"] do
       Rake::Task["assets:precompile:all"].invoke
     end
 
     task :rjs => :environment do
-      res = %x[cd #{Padrino.root('public/js/src')} && node #{Padrino.root('build/r.js')} -o mainConfigFile=config.js baseUrl=. name=vendor/almond.js include=main out=../build/app.js optimize=uglify2]
+      puts "cd #{Padrino.root('public/js')} && node #{Padrino.root('build/r.js')} -o mainConfigFile=config.js baseUrl=. name=vendor/almond.js include=main out=../build/app.js optimize=uglify2"
+      res = %x[cd #{Padrino.root('public/js')} && node #{Padrino.root('build/r.js')} -o mainConfigFile=config.js baseUrl=. name=vendor/almond.js include=main out=../build/app.js optimize=uglify2]
       raise RuntimeError, "JS compilation with r.js failed. \n #{res}" unless $?.success?
+    end
+
+    task :css do
+      %w(main.css main.ie.css).each do |css|
+        tmp_file = Padrino.root('tmp', css)
+        in_file = Padrino.root('public/css', css)
+        out_file = Padrino.root('public/build', css)
+
+        %x[node #{Padrino.root('build/r.js')} -o cssIn=#{in_file} out=#{tmp_file} cssPrefix=/css cssKeepLicense=true preserveLicenseComments=true]
+        %x[node #{Padrino.root('build/clean-css.js')} --skip-import --skip-rebase --s0 -o #{out_file} #{tmp_file}]
+        File.delete tmp_file
+      end
     end
 
     task :less do
