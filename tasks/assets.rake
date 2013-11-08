@@ -30,7 +30,6 @@ namespace :assets do
     end
 
     task :rjs => :environment do
-      puts "cd #{Padrino.root('public/js')} && node #{Padrino.root('build/r.js')} -o mainConfigFile=config.js baseUrl=. name=vendor/almond.js include=main out=../build/app.js optimize=uglify2"
       res = %x[cd #{Padrino.root('public/js')} && node #{Padrino.root('build/r.js')} -o mainConfigFile=config.js baseUrl=. name=vendor/almond.js include=main out=../build/app.js optimize=uglify2]
       raise RuntimeError, "JS compilation with r.js failed. \n #{res}" unless $?.success?
     end
@@ -41,8 +40,11 @@ namespace :assets do
         in_file = Padrino.root('public/css', css)
         out_file = Padrino.root('public/build', css)
 
-        %x[node #{Padrino.root('build/r.js')} -o cssIn=#{in_file} out=#{tmp_file} cssPrefix=/css cssKeepLicense=true preserveLicenseComments=true]
-        %x[node #{Padrino.root('build/clean-css.js')} --skip-import --skip-rebase --s0 -o #{out_file} #{tmp_file}]
+        res = %x[node #{Padrino.root('build/r.js')} -o cssIn=#{in_file} out=#{tmp_file} cssPrefix=/css cssKeepLicense=true preserveLicenseComments=true]
+        raise RuntimeError, "r.js CSS compilation failed. \n #{res}" unless $?.success?
+
+        res = %x[node #{Padrino.root('build/clean-css.js')} --skip-import --skip-rebase --s0 -o #{out_file} #{tmp_file}]
+        raise RuntimeError, "clean-css compilation failed. \n #{res}" unless $?.success?
         File.delete tmp_file
       end
     end
