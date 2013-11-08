@@ -6,43 +6,32 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>AL Finder</title>
-
-
-  <link rel="stylesheet" href="css/foundation.min.css">
-  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
-  <!--[if lte IE 8]>
-  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
-  <![endif]-->
-  <link rel="stylesheet" href="css/MarkerCluster.css" />
-  <link rel="stylesheet" href="css/MarkerCluster.Default.css" />
-  <link rel="stylesheet" href="css/datatables/dataTables.foundation.css" />
-  <link rel="stylesheet" href="css/leaflet/leaflet-minimap.css" />
-  <!--[if lte IE 8]><link rel="stylesheet" href="css/app.ie.css" /><![endif]-->
-  <link rel="stylesheet" href="css/app.css" />
-
-
-  <script src="js/src/vendor/custom.modernizr.js"></script>
-
+  <% if ENV['COMPILED'] == 'true' %>
+    <link rel="stylesheet" href="build/main.css" />
+    <!--[if lte IE 8]> <link rel="stylesheet" href="build/main.ie.css" /><![endif]-->
+  <% else %>
+    <link rel="stylesheet" href="css/main.css" />
+    <!--[if lte IE 8]> <link rel="stylesheet" href="css/main.ie.css" /><![endif]-->
+  <% end %>
+  <script src="js/vendor/custom.modernizr.js"></script>
 </head>
 <body>
 <div class="row main">
 <%= yield %>
 </div>
 
-<% if true %>
-<script src="js/src/vendor/require.js"></script>
-<script src="js/src/config.js"></script>
-<script>
-  require.config(
-  {
-    baseUrl: 'js/<%= Padrino.env == :production ? 'build' : 'src' %>/',
-    waitSeconds: 120
-  }
-  );
-  require(['main']);
-</script>
+<% if ENV['COMPILED'] == 'true' %>
+    <script src="build/app.js"></script>
 <% else %>
-  <script src="js/build/app.js"></script>
+  <script src="js/vendor/require.js"></script>
+  <script src="js/config.js"></script>
+  <script>
+    require.config({
+      baseUrl: 'js/',
+      waitSeconds: 120
+    });
+    require(['main']);
+  </script>
 <% end %>
 </body>
 </html>

@@ -7,6 +7,7 @@ module AlFinder
 
     register Padrino::Cache
     enable :sessions
+    enable :caching if ENV['CACHE'] == 'true'
 
     ##
     # Caching support.

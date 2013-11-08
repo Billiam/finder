@@ -1,6 +1,4 @@
 AlFinder::App.controllers :points do
-  enable :caching
-
   layout :application
 
   get :index, map: '/', provides: [:html, :csv], cache: true do
