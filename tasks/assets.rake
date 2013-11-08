@@ -49,7 +49,6 @@ namespace :assets do
         res = %x[node #{Padrino.root('build/clean-css.js')} --skip-import --skip-rebase --s0 -o #{out_file} #{tmp_file}]
         puts res
         raise RuntimeError, "clean-css compilation failed." unless $?.success?
-        File.delete tmp_file
       end
     end
 
