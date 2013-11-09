@@ -9,8 +9,11 @@ GEM
       multi_json (~> 1.0)
     bcrypt-ruby (3.1.2)
     builder (3.0.4)
+    csso-rails (0.3.2)
+      execjs (>= 1)
     diff-lcs (1.2.4)
     erubis (2.7.0)
+    execjs (2.0.2)
     http_router (0.11.0)
       rack (>= 1.0.0)
       url_mount (~> 0.2.1)
@@ -110,6 +113,7 @@ PLATFORMS
 DEPENDENCIES
   activesupport (~> 3.2.15)
   bcrypt-ruby
+  csso-rails
   erubis (~> 2.7.0)
   httparty
   mongoid (~> 3.0.0)

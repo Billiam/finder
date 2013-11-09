@@ -19,6 +19,7 @@ gem 'snoo', require: false
 gem 'httparty', require: false
 #required to resolve mongoid geospatial vs padrino dependencies
 gem "activesupport", "~> 3.2.15", require: false
+gem "csso-rails", require: false
 
 # Test requirements
 group :development, :test do
