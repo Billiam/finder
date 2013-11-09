@@ -35,20 +35,17 @@ namespace :assets do
     end
 
     task :css do
+      require 'csso'
       %w(main.css main.ie.css).each do |css|
         tmp_file = Padrino.root('tmp', css)
         in_file = Padrino.root('public/css', css)
         out_file = Padrino.root('public/build', css)
 
-        puts "node #{Padrino.root('build/r.js')} -o cssIn=#{in_file} out=#{tmp_file} cssPrefix=/css cssKeepLicense=true preserveLicenseComments=true"
         res = %x[cd #{Padrino.root} && node #{Padrino.root('build/r.js')} -o cssIn=#{in_file} out=#{tmp_file} cssPrefix=/css cssKeepLicense=true preserveLicenseComments=true]
-        puts res
-        raise RuntimeError, "r.js CSS compilation failed" unless $?.success?
 
-        puts "node #{Padrino.root('build/clean-css.js')} --skip-import --skip-rebase --s0 -o #{out_file} #{tmp_file}"
-        res = %x[node #{Padrino.root('build/clean-css.js')} --skip-import --skip-rebase --s0 -o #{out_file} #{tmp_file}]
-        puts res
-        raise RuntimeError, "clean-css compilation failed." unless $?.success?
+        raise RuntimeError, "r.js CSS compilation failed" unless $?.success?
+        File.write(out_file, Csso.optimize(File.read(tmp_file), true))
+        File.delete tmp_file
       end
     end
 
