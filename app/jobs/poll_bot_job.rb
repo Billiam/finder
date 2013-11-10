@@ -10,7 +10,7 @@ class PollBotJob
 
       bot.run do |action, results|
         if [:remove, :gong, :register].include?(action)
-          public_send action, results
+          self.class.public_send action, results
         end
       end
     end
@@ -28,7 +28,8 @@ class PollBotJob
   end
 
   def self.register data
-    Request.create(data)
+    raise data.inspect
+    Request.create(data, without_protection: true)
   end
 
   def self.gong data
