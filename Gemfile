@@ -12,7 +12,7 @@ gem 'rake'
 # Component requirements
 gem 'bcrypt-ruby', :require => 'bcrypt'
 gem 'erubis', '~> 2.7.0'
-gem 'mongoid', '~> 3.0.0'
+gem 'mongoid', '~> 3.1.5'
 gem "mongoid_geospatial", "~> 2.8.2"
 
 gem 'snoo', require: false
