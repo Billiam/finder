@@ -7,7 +7,7 @@
     <![endif]-->
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
     <meta name=viewport content='width=device-width,initial-scale=1' />
-    <title><%= @title.present? ? "#{@title} | Padrino Admin" : "Padrino Admin" %></title>
+    <title><%= "#{@title} | " if  @title.present? %>AlFinder Admin</title>
     <%= favicon_tag "favicon.ico" %>
     <link href='http://fonts.googleapis.com/css?family=Varela' rel=stylesheet />
     <%= stylesheet_link_tag %w(bootstrap application app) %>
@@ -41,7 +41,7 @@
 
     <div class='container main'>
       <div class='main-wrapper'>
-        <%= [:error, :warning, :success, :notice].map { |type| flash_tag(type, :class => "alert alert-#{type} fade in", :bootstrap => true) }.join.html_safe %>
+        <%= {:error => 'danger', :warning => 'warning', :success => 'success', :notice => 'info'}}.map { |type, class_name| flash_tag(type, :class => "alert alert-#{class_name} fade in", :bootstrap => true) }.join.html_safe %>
         <div class='row'><%= yield %></div>
         <div class='main-wrapper-push'></div>
       </div>
@@ -49,7 +49,7 @@
 
     <footer>
       <div class='footer-wrapper container'>
-        <p class='pull-left'>Copyright &copy; 2013 Your Site - Powered by Padrino v.0.11.4</p>
+        <p class='pull-left'>Copyright &copy; 2013 AlFinder - Powered by Padrino v.0.11.4</p>
         <ul class='pull-right footer-links'>
           <li><%= link_to tag_icon(:home, 'web'), 'http://www.padrinorb.com', :target => :_blank, :class => 'footer-links-link' %></li>
           <li><%= link_to tag_icon(:heart, 'blog'), 'http://www.padrinorb.com/blog', :target => :_blank, :class => 'footer-links-link' %></li>
