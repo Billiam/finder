@@ -1,5 +1,8 @@
 class ProcessRequestsJob
   include Logging
+  include Lockable
+
+  lock_with :geocode_lock
 
   def self.fetch_requests
     requests = []
@@ -18,7 +21,7 @@ class ProcessRequestsJob
     @requests ||= self.class.fetch_requests
   end
 
-  def work
+  def run
     #convert messages array to author => message
     request_data = Hash[requests.map{ |m| [m.name, m.search] } ]
 
@@ -49,5 +52,11 @@ class ProcessRequestsJob
     Point.bulk_upsert results
 
     requests.each(&:delete)
+  end
+
+  def work
+    lock do
+      run
+    end
   end
 end

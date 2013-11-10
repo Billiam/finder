@@ -4,6 +4,10 @@ module GongBot
   class Base
     include Logging
 
+    def self.is_remove? message
+      message.strip =~ /\A(remove|delete)\z/i
+    end
+
     def self.is_gong? message
       message.strip =~ /\A!*g+o+n+g+[!1]*\z/i
     end
@@ -12,11 +16,14 @@ module GongBot
       results = {
         registrations: [],
         gongs: [],
+        remove: [],
       }
 
       messages.each do |m|
         if is_gong? m[:message]
           results[:gongs] << m
+        elsif is_remove? m[:message]
+          results[:remove] << m
         else
           results[:registrations] << m
         end
@@ -30,15 +37,13 @@ module GongBot
 
       data = inbox_requests
 
-      register = Request::Register.new(data[:registrations])
-      register.execute
+      register = Parser::Register.from_messages(data[:registrations])
+      gong = Parser::Gong.from_messages data[:gongs]
+      remove = Parser::Remove.from_messages(data[:remove])
 
-      gong = Request::Gong.from_messages data[:gongs]
-      gong.execute
-
-      if data[:registrations].length < 25
-        register.results.each { |result| notify_registration result }
-      end
+      yield :register, register.results
+      yield :gong, gong.results
+      yield :remove, remove.results
     end
 
     def client

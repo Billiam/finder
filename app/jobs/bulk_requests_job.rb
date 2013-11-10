@@ -1,6 +1,6 @@
 require 'process_requests_job'
 
-class InitRequestsJob
+class BulkRequestsJob
   include Logging
 
   def work
@@ -8,7 +8,7 @@ class InitRequestsJob
     loggy.info "Spawning #{tasks} jobs"
     tasks.times do
       job = ProcessRequestsJob.new
-      job.work
+      job.run
     end
   end
 end
