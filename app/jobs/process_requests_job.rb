@@ -41,12 +41,14 @@ class ProcessRequestsJob
         country:  data.country,
         location: { lat: data.lat, lng: data.long },
       )
-      point.created_at ||= Time.now
 
-      loggy.warn "Invalid point: #{point.errors.full_messages}" unless point.valid?
+      loggy.warn "Invalid point: #{point.attributes} - #{point.errors.full_messages}" unless point.valid?
 
       point
     end
+
+    #remove invalid entries
+    results.select!(&:valid?)
 
     loggy.debug "Inserting #{results.length} points"
     Point.bulk_upsert results

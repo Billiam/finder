@@ -28,7 +28,6 @@ class PollBotJob
   end
 
   def self.register data
-    raise data.inspect
     Request.create(data, without_protection: true)
   end
 

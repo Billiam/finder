@@ -16,6 +16,7 @@ module Lockable
     begin
       self.class.lock_model.with(safe: true).create
       yield
+      true
     rescue Moped::Errors::OperationFailure
       false
     end
