@@ -1,5 +1,5 @@
 class BotLock < JobLock
   def self.expiration
-    5.minutes
+    4.minutes
   end
 end

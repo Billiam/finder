@@ -1,5 +1,5 @@
 class GeocodeLock < JobLock
   def self.expiration
-    20.minutes
+    19.minutes
   end
 end
