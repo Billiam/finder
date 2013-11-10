@@ -3,7 +3,7 @@ module GongBot::Parser
     def self.user_data(messages)
       messages.map do |message|
         {
-          name:   m[:author],
+          name:   message[:author],
           pm:     true,
           search: message[:message],
         }

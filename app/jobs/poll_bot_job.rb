@@ -1,10 +1,11 @@
 class PollBotJob
   include Lockable
+  include Logging
 
   lock_with :bot_lock
 
   def work
-    lock do
+    success = lock do
       bot = GongBot::Base.new
 
       bot.run do |action, results|
@@ -12,6 +13,10 @@ class PollBotJob
           public_send action, results
         end
       end
+    end
+
+    unless success
+      loggy.warn "Bot poll already in progress"
     end
   end
 

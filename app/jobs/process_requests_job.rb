@@ -8,7 +8,7 @@ class ProcessRequestsJob
     requests = []
 
     begin
-      request = Request.ready.sort_by(created_at: :desc).find_and_modify({ "$set" => { status: 'processing'}}, new: true)
+      request = Request.ready.order_by(created_at: :desc).find_and_modify({ "$set" => { status: 'processing' }}, new: true)
       break if request.nil?
 
       requests << request if request
@@ -55,8 +55,8 @@ class ProcessRequestsJob
   end
 
   def work
-    lock do
-      run
+    unless lock { run }
+      loggy.warn "Geocoding already in progress"
     end
   end
 end

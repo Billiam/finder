@@ -1,6 +1,7 @@
 module Lockable
   extend ActiveSupport::Concern
 
+
   included do
     cattr_accessor :lock_model
   end
@@ -15,8 +16,8 @@ module Lockable
     begin
       self.class.lock_model.with(safe: true).create
       yield
-    rescue Moped::Errors::ConnectionFailure => e
-      #lock already exists
+    rescue Moped::Errors::OperationFailure
+      false
     end
   end
 end
