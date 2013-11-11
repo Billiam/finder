@@ -107,12 +107,13 @@ define(function(require) {
     };
 
     Map.prototype.minimap = function() {
-        var layer = new leaflet.TileLayer(TONER_TILES, {minZoom: 0, maxZoom: 2});
+        var layer = new leaflet.TileLayer(TONER_TILES, {minZoom: 0, maxZoom: 1});
 
         return new leaflet.Control.MiniMap(layer, {
             height: 80,
             width: 170,
-            autoToggleDisplay: true
+            autoToggleDisplay: true,
+            aimingRectOptions: {weight: 5, color: '#B31717', opacity: 0.85, fillOpacity:0}
         });
     };
 
