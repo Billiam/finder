@@ -18,6 +18,13 @@ module Mapquest
     }
   end
 
+  # Remove recognized special characters from mapquest
+  def format_search(value)
+    #remove unacceptable characters
+    value = value.gsub(/[`:"~!@#%&=_;',\.\/\{\}\|\+\<\>\?\$\^\*\(\)\-\[\]\\]/,'').gsub(/\s+/,' ')
+    value.strip
+  end
+
   def geocode_coarse(locations)
     # hash of user => geocoded address (or nil)
     addresses = geocode locations
@@ -39,7 +46,7 @@ module Mapquest
   end
 
   def geocode(locations)
-    #create username to nil hash to return
+    #create {username => nil, ...} hash for final data return
     results = Hash[locations.keys.zip()]
 
     # safe hash inversion
@@ -47,8 +54,12 @@ module Mapquest
     query = locations.each_with_object({}) do |(key, value), query|
       next if value.nil?
 
-      query[value] ||= []
-      query[value] << key
+      value = format_search value
+      # Override known bad geocodes
+      location = Overrider.fix value
+
+      query[location] ||= []
+      query[location] << key
     end
 
     # list of input addresses
