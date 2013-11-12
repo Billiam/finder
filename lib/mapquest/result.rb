@@ -22,7 +22,7 @@ module Mapquest
     end
 
     def street_quality?
-      ! Location.quality.include? self.result['GeocodeQuality']
+      ! Location.quality.include? self.result['geocodeQuality']
     end
 
     def formatted

@@ -19,7 +19,7 @@ AlFinder::Admin.controllers :points do
       if @point.update_attributes(params[:point], as: current_account.role.to_sym)
         flash[:success] = pat(:update_success, :model => 'Point', :id =>  "#{params[:id]}")
       else
-        flash.now[:error] = pat(:update_error, :model => 'point')
+        flash[:error] = pat(:update_error, :model => 'point')
       end
       redirect(url(:points, :index, page: params[:page], filter: params[:filter]))
     else

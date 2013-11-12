@@ -11,6 +11,9 @@ Bundler.require(:default, PADRINO_ENV)
 app_env = Padrino.root('config/environment.rb')
 load(app_env) if File.exists?(app_env)
 
+config :production do
+  require 'newrelic_rpm'
+end
 ##
 # ## Enable devel logging
 #

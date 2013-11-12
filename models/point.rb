@@ -6,7 +6,7 @@ class Point
   include Mongoid::Geospatial
 
   attr_accessible :status, as: :moderator
-  attr_accessible :name, :status, :location, :country, :county, :city, :state, as: :admin
+  attr_accessible :name, :status, :location, :country, :county, :city, :state, as: [:default, :admin]
 
 
   # field <name>, :type => <type>, :default => <value>
@@ -124,13 +124,8 @@ class Point
 
   def self.bulk_upsert(rows)
     update, insert = rows.partition(&:persisted?)
+    insert.each { |i| i.created_at ||= Time.now }
     collection.insert(insert.map(&:as_document)) unless insert.empty?
     update.each(&:save)
   end
-
-  # You can define indexes on documents using the index macro:
-  # index :field <, :unique => true>
-
-  # You can create a composite key in mongoid to replace the default id using the key macro:
-  # key :field <, :another_field, :one_more ....>
 end

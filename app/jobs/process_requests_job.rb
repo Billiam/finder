@@ -1,11 +1,14 @@
 class ProcessRequestsJob
   include Logging
+  include Lockable
+
+  lock_with :geocode_lock
 
   def self.fetch_requests
     requests = []
 
     begin
-      request = Request.ready.sort_by(created_at: :desc).find_and_modify({ "$set" => { status: 'processing'}}, new: true)
+      request = Request.ready.order_by(created_at: :desc).find_and_modify({ "$set" => { status: 'processing' }}, new: true)
       break if request.nil?
 
       requests << request if request
@@ -18,7 +21,7 @@ class ProcessRequestsJob
     @requests ||= self.class.fetch_requests
   end
 
-  def work
+  def run
     #convert messages array to author => message
     request_data = Hash[requests.map{ |m| [m.name, m.search] } ]
 
@@ -38,16 +41,24 @@ class ProcessRequestsJob
         country:  data.country,
         location: { lat: data.lat, lng: data.long },
       )
-      point.created_at ||= Time.now
 
-      loggy.warn "Invalid point: #{point.errors.full_messages}" unless point.valid?
+      loggy.warn "Invalid point: #{point.attributes} - #{point.errors.full_messages}" unless point.valid?
 
       point
     end
+
+    #remove invalid entries
+    results.select!(&:valid?)
 
     loggy.debug "Inserting #{results.length} points"
     Point.bulk_upsert results
 
     requests.each(&:delete)
+  end
+
+  def work
+    unless lock { run }
+      loggy.warn "Geocoding already in progress"
+    end
   end
 end
