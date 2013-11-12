@@ -9,6 +9,8 @@ source 'https://rubygems.org'
 # Project requirements
 gem 'rake'
 
+gem 'newrelic_rpm', require: false
+
 # Component requirements
 gem 'bcrypt-ruby', :require => 'bcrypt'
 gem 'erubis', '~> 2.7.0'
