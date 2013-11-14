@@ -2,7 +2,7 @@ AlFinder::App.controllers :points do
   layout :application
 
   get :index, map: '/', provides: [:html, :csv], cache: true do
-    expires_in 300
+    expires_in 350
 
     @title = ''
     case content_type
