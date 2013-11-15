@@ -21,4 +21,13 @@ class Request
     inclusion: STATUSES
 
   scope :ready, where(status: 'new')
+
+  def self.bulk_upsert(rows)
+    update, insert = rows.partition(&:persisted?)
+    insert.each { |i| i.created_at ||= Time.now }
+    collection.insert(insert.map(&:as_document)) unless insert.empty?
+    update.each(&:save)
+
+    [update, insert]
+  end
 end
