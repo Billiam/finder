@@ -80,7 +80,7 @@ module GongBot
       loggy.info 'Fetching info messages'
 
       messages = client.get_messages('unread', {
-        #mark: true,
+        mark: true,
         limit: 50
       })
 
