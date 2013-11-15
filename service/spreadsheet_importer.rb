@@ -15,7 +15,7 @@ class SpreadsheetImporter
         next
       end
 
-      location = row.values_at(*%w(city county state country)).reject { |i| i.nil? || i.empty? }
+      location = row.values_at(*%w(city state country)).reject { |i| i.nil? || i.empty? }
 
       if location.empty?
         loggy.warn "#{row['username']} has no location"
@@ -28,9 +28,8 @@ class SpreadsheetImporter
       point.assign_attributes(
         search:  location.join(', '),
         pm:      false,
-        status:  'approved',
+        status:  'new',
       )
-      point.created_at ||= Time.now
 
       if point.valid?
         points << point
@@ -39,12 +38,7 @@ class SpreadsheetImporter
       end
     end
 
-    update, insert = points.partition(&:persisted?)
-
-    Request.collection.insert(insert.map(&:as_document)) unless insert.empty?
-    update.each(&:save)
-
+    update, insert = Request.bulk_upsert points
     loggy.debug "New Requests: (#{insert.length}), Updated Requests: (#{update.length})"
-
   end
 end
