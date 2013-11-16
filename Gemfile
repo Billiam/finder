@@ -22,6 +22,8 @@ gem 'httparty', require: false
 #required to resolve mongoid geospatial vs padrino dependencies
 gem "activesupport", "~> 3.2.15", require: false
 gem "csso-rails", require: false
+gem 'sucker_punch', '~> 1.0'
+gem 'clockwork',  '~> 0.7.0'
 
 # Test requirements
 group :development, :test do
