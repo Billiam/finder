@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# only run if this appears to be the main gear
+if [ -a ${OPENSHIFT_DATA_DIR}main_gear ] ; then
+  cd $OPENSHIFT_REPO_DIR
+  nohup clockwork clock.rb >${OPENSHIFT_DIY_LOG_DIR}/clockwork.log 2>&1 &
+fi

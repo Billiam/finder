@@ -1,4 +1,5 @@
 class ProcessRequestsJob
+  include SuckerPunch::Job
   include Logging
   include Lockable
 
@@ -56,7 +57,7 @@ class ProcessRequestsJob
     requests.each(&:delete)
   end
 
-  def work
+  def perform
     unless lock { run }
       loggy.warn "Geocoding already in progress"
     end

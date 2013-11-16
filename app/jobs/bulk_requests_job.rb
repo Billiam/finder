@@ -7,7 +7,7 @@ class BulkRequestsJob
     tasks = (Request.ready.length / 100.0).ceil
     loggy.info "Spawning #{tasks} jobs"
     tasks.times do
-      ProcessRequestsJob.new.run
+      ProcessRequestsJob.new.perform
     end
   end
 end

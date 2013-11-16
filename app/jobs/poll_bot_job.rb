@@ -1,10 +1,11 @@
 class PollBotJob
+  include SuckerPunch::Job
   include Lockable
   include Logging
 
   lock_with :bot_lock
 
-  def work
+  def perform
     success = lock do
       bot = GongBot::Base.new
 
