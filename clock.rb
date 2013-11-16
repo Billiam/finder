@@ -1,6 +1,5 @@
 require 'clockwork'
 require './config/boot'
-require './config/environment'
 
 require 'poll_bot_job'
 require 'process_requests_job'
