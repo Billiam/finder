@@ -16,6 +16,7 @@ GEM
       tzinfo (~> 0.3.35)
     csso-rails (0.3.2)
       execjs (>= 1)
+    daemons (1.1.9)
     diff-lcs (1.2.4)
     erubis (2.7.0)
     execjs (2.0.2)
@@ -124,6 +125,7 @@ DEPENDENCIES
   bcrypt-ruby
   clockwork (~> 0.7.0)
   csso-rails
+  daemons (~> 1.1.9)
   erubis (~> 2.7.0)
   httparty
   mongoid (~> 3.1.5)

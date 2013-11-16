@@ -24,6 +24,7 @@ gem "activesupport", "~> 3.2.15", require: false
 gem "csso-rails", require: false
 gem 'sucker_punch', '~> 1.0'
 gem 'clockwork',  '~> 0.7.0'
+gem 'daemons', '~> 1.1.9'
 
 # Test requirements
 group :development, :test do

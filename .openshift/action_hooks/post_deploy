@@ -1,15 +1,11 @@
 #!/bin/bash
 # only run if this appears to be the main gear
-
-
 if [ -a ${OPENSHIFT_DATA_DIR}main_gear ] ; then
-  pid=${OPENSHIFT_DATA_DIR}clockwork.pid
-
-  # Kill existing clockwork process
-  [ -a $pid ] && kill -TERM `cat $pid`
-
   echo 'starting clockwork'
   cd $OPENSHIFT_REPO_DIR
-  nohup bundle exec clockwork clock.rb >${OPENSHIFT_RUBY_LOG_DIR}/clockwork.log 2>&1 &
-  echo $! > $pid
+  cmd="bundle exec clockworkd --pid-dir=${OPENSHIFT_DATA_DIR} --clock=clock.rb --log --log-dir=${OPENSHIFT_RUBY_LOG_DIR}"
+
+  echo $cmd
+  #${cmd} stop
+  #${cmd} start
 fi
