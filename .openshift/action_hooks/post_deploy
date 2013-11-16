@@ -6,6 +6,6 @@ if [ -a ${OPENSHIFT_DATA_DIR}main_gear ] ; then
   cmd="bundle exec clockworkd --pid-dir=${OPENSHIFT_DATA_DIR} --clock=clock.rb --log --log-dir=${OPENSHIFT_RUBY_LOG_DIR}"
 
   echo $cmd
-  #${cmd} stop
-  #${cmd} start
+  ${cmd} stop
+  ${cmd} start
 fi
