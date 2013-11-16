@@ -103,8 +103,8 @@ class Point
       latitude: location.y,
       longitude: location.x,
       city: city,
-      state: state,
       county: county,
+      state: state,
       country: country,
       place: location_name,
     }
