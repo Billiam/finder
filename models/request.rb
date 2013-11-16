@@ -22,6 +22,8 @@ class Request
 
   scope :ready, where(status: 'new')
 
+  index status: 1
+
   def self.bulk_upsert(rows)
     update, insert = rows.partition(&:persisted?)
     insert.each { |i| i.created_at ||= Time.now }

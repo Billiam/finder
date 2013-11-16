@@ -29,6 +29,7 @@ class Point
     inclusion: STATUSES
 
   index({name: 1}, {unique: true})
+  index status: 1
 
   scope :enabled, where(status: 'approved')
   scope :unmoderated, where(status: 'pending')
