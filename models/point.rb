@@ -6,7 +6,7 @@ class Point
   include Mongoid::Geospatial
 
   attr_accessible :status, as: :moderator
-  attr_accessible :name, :status, :location, :country, :county, :city, :state, as: [:default, :admin]
+  attr_accessible :name, :status, :location, :country, :county, :city, :state, :search, as: [:default, :admin]
 
   # Field Definitions
   field :name, type: String
@@ -20,6 +20,7 @@ class Point
   field :county, type: String
   field :city, type: String
   field :state, type: String
+  field :search, type: String
 
   # Indices
   index({lname: 1}, {unique: true})

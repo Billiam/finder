@@ -40,6 +40,7 @@ class ProcessRequestsJob
         state:    data.state,
         country:  data.country,
         location: { lat: data.lat, lng: data.long },
+        search:   request_data[user],
       )
 
       loggy.warn "Invalid point: #{point.attributes} - #{point.errors.full_messages}" unless point.valid?
