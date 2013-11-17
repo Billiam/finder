@@ -31,9 +31,10 @@ class ProcessRequestsJob
 
     #fetch values for request
     results = addresses.map do |user, data|
-      point = Point.find_or_initialize_by(name: user)
+      point = Point.find_or_initialize_by(lname: user.downcase)
 
       point.assign_attributes(
+        name:     user,
         city:     data.city,
         county:   data.county,
         state:    data.state,

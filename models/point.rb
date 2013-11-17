@@ -8,9 +8,9 @@ class Point
   attr_accessible :status, as: :moderator
   attr_accessible :name, :status, :location, :country, :county, :city, :state, as: [:default, :admin]
 
-
-  # field <name>, :type => <type>, :default => <value>
+  # Field Definitions
   field :name, type: String
+  field :lname, type: String
 
   geo_field :location, delegate: true
 
@@ -21,19 +21,27 @@ class Point
   field :city, type: String
   field :state, type: String
 
+  # Indices
+  index({lname: 1}, {unique: true})
+  index status: 1, created_at: -1
+
+  # Validation
   validates :name,
-    length: { minimum: 3 },
+    length: { minimum: 3 }
+
+  validates :lname,
     uniqueness: true
 
   validates :status,
     inclusion: STATUSES
 
-  index({name: 1}, {unique: true})
-  index status: 1, created_at: -1
-
+  # Scopes
   scope :enabled, where(status: 'approved')
   scope :unmoderated, where(status: 'pending')
   scope :disabled, where(status: 'denied')
+
+  # Callbacks
+  before_validation :set_case_insensitive
 
   def self.valid_filter?(type)
     %w(enabled unmoderated disabled).include? type.to_s
@@ -45,20 +53,16 @@ class Point
     :enabled
   end
 
+  def self.by_name(name)
+    self.in(lname: Array(name).map(&:downcase))
+  end
+
   def self.filter(type)
     public_send get_filter(type)
   end
 
   def self.approve
     unmoderated.update_all status: 'approved'
-  end
-
-  def active?
-    status == 'approved'
-  end
-
-  def disabled?
-    status == 'denied'
   end
 
   def self.cluster(zoom=nil)
@@ -84,6 +88,33 @@ class Point
       }
     )
     map_reduce(map, reduce).out(inline: true).map { |i| i['value'] }
+  end
+
+  def self.to_csv
+    require 'csv'
+
+    CSV.generate do |csv|
+      csv << csv_columns
+
+      each do |i|
+        csv << i.as_csv.values
+      end
+    end
+  end
+
+  def self.bulk_upsert(rows)
+    update, insert = rows.partition(&:persisted?)
+    insert.each { |i| i.created_at ||= Time.now }
+    collection.insert(insert.map(&:as_document)) unless insert.empty?
+    update.each(&:save)
+  end
+
+  def active?
+    status == 'approved'
+  end
+
+  def disabled?
+    status == 'denied'
   end
 
   def location_name
@@ -114,22 +145,7 @@ class Point
     }
   end
 
-  def self.to_csv
-    require 'csv'
-
-    CSV.generate do |csv|
-      csv << csv_columns
-
-      each do |i|
-        csv << i.as_csv.values
-      end
-    end
-  end
-
-  def self.bulk_upsert(rows)
-    update, insert = rows.partition(&:persisted?)
-    insert.each { |i| i.created_at ||= Time.now }
-    collection.insert(insert.map(&:as_document)) unless insert.empty?
-    update.each(&:save)
+  def set_case_insensitive
+    self.lname = self.name.downcase if self.name_changed?
   end
 end

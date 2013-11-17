@@ -24,8 +24,8 @@ class PollBotJob
   def self.remove users
     return unless users.present?
 
-    Request.in(name: users).delete
-    Point.in(name: users).delete
+    Request.by_name(users).delete
+    Point.by_name(users).delete
   end
 
   def self.register data

@@ -25,8 +25,9 @@ class SpreadsheetImporter
 
       loggy.debug "Importing: #{row['username']}"
 
-      point = Request.find_or_initialize_by(name: row['username'])
+      point = Request.find_or_initialize_by(lname: row['username'].downcase)
       point.assign_attributes(
+        name:    row['username'],
         search:  location.join(', '),
         pm:      false,
         status:  'new',
