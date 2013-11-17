@@ -1,10 +1,11 @@
 class PollBotJob
+  include SuckerPunch::Job
   include Lockable
   include Logging
 
   lock_with :bot_lock
 
-  def work
+  def perform
     success = lock do
       bot = GongBot::Base.new
 
@@ -23,8 +24,8 @@ class PollBotJob
   def self.remove users
     return unless users.present?
 
-    Request.in(name: users).delete
-    Point.in(name: users).delete
+    Request.by_name(users).delete
+    Point.by_name(users).delete
   end
 
   def self.register data

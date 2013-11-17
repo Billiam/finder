@@ -57,13 +57,13 @@ define(function(require) {
         var icon = this.getIcon();
         var map = this;
         var markerList = markers.map(function(dat) {
-            var popup = '<strong>' + dat.get('name') + '</strong><br />' + dat.get('place');
+            var popup = '<strong>' + dat.get('name') + '</strong><br />' + dat.location();
             var options = { autoPan: false };
 
             var marker = new Marker(
                 [dat.get('latitude'), dat.get('longitude')],
                 {
-                    title: dat.get('name') + " - " + dat.get('place'),
+                    title: dat.get('name') + " - " + dat.location(),
                     icon: icon
                 }
             ).bindPopup(popup, options);

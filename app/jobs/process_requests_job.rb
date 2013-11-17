@@ -1,4 +1,5 @@
 class ProcessRequestsJob
+  include SuckerPunch::Job
   include Logging
   include Lockable
 
@@ -17,11 +18,9 @@ class ProcessRequestsJob
     requests
   end
 
-  def requests
-    @requests ||= self.class.fetch_requests
-  end
-
   def run
+    requests = Actor.current.class.fetch_requests
+
     #convert messages array to author => message
     request_data = Hash[requests.map{ |m| [m.name, m.search] } ]
 
@@ -32,14 +31,16 @@ class ProcessRequestsJob
 
     #fetch values for request
     results = addresses.map do |user, data|
-      point = Point.find_or_initialize_by(name: user)
+      point = Point.find_or_initialize_by(lname: user.downcase)
 
       point.assign_attributes(
+        name:     user,
         city:     data.city,
         county:   data.county,
         state:    data.state,
         country:  data.country,
         location: { lat: data.lat, lng: data.long },
+        search:   request_data[user],
       )
 
       loggy.warn "Invalid point: #{point.attributes} - #{point.errors.full_messages}" unless point.valid?
@@ -56,7 +57,7 @@ class ProcessRequestsJob
     requests.each(&:delete)
   end
 
-  def work
+  def perform
     unless lock { run }
       loggy.warn "Geocoding already in progress"
     end

@@ -6,11 +6,11 @@ class Point
   include Mongoid::Geospatial
 
   attr_accessible :status, as: :moderator
-  attr_accessible :name, :status, :location, :country, :county, :city, :state, as: [:default, :admin]
+  attr_accessible :name, :status, :location, :country, :county, :city, :state, :search, as: [:default, :admin]
 
-
-  # field <name>, :type => <type>, :default => <value>
+  # Field Definitions
   field :name, type: String
+  field :lname, type: String
 
   geo_field :location, delegate: true
 
@@ -20,19 +20,29 @@ class Point
   field :county, type: String
   field :city, type: String
   field :state, type: String
+  field :search, type: String
 
+  # Indices
+  index({lname: 1}, {unique: true})
+  index status: 1, created_at: -1
+
+  # Validation
   validates :name,
-    length: { minimum: 3 },
+    length: { minimum: 3 }
+
+  validates :lname,
     uniqueness: true
 
   validates :status,
     inclusion: STATUSES
 
-  index({name: 1}, {unique: true})
-
+  # Scopes
   scope :enabled, where(status: 'approved')
   scope :unmoderated, where(status: 'pending')
   scope :disabled, where(status: 'denied')
+
+  # Callbacks
+  before_validation :set_case_insensitive
 
   def self.valid_filter?(type)
     %w(enabled unmoderated disabled).include? type.to_s
@@ -44,16 +54,16 @@ class Point
     :enabled
   end
 
+  def self.by_name(name)
+    self.in(lname: Array(name).map(&:downcase))
+  end
+
   def self.filter(type)
     public_send get_filter(type)
   end
 
-  def active?
-    status == 'approved'
-  end
-
-  def disabled?
-    status == 'denied'
+  def self.approve
+    unmoderated.update_all status: 'approved'
   end
 
   def self.cluster(zoom=nil)
@@ -81,35 +91,6 @@ class Point
     map_reduce(map, reduce).out(inline: true).map { |i| i['value'] }
   end
 
-  def location_name
-    @location_name ||= [city, county, state, country].reject(&:nil?).join(', ')
-  end
-
-  def to_s
-    location_name
-  end
-
-  def self.csv_columns
-    [:name, :latitude, :longitude, :city, :county, :state, :country, :place]
-  end
-
-  def as_csv
-    export_attributes
-  end
-
-  def export_attributes
-    {
-      name: name,
-      latitude: location.y,
-      longitude: location.x,
-      city: city,
-      state: state,
-      county: county,
-      country: country,
-      place: location_name,
-    }
-  end
-
   def self.to_csv
     require 'csv'
 
@@ -127,5 +108,45 @@ class Point
     insert.each { |i| i.created_at ||= Time.now }
     collection.insert(insert.map(&:as_document)) unless insert.empty?
     update.each(&:save)
+  end
+
+  def active?
+    status == 'approved'
+  end
+
+  def disabled?
+    status == 'denied'
+  end
+
+  def location_name
+    @location_name ||= [city, county, state, country].reject(&:nil?).join(', ')
+  end
+
+  def to_s
+    location_name
+  end
+
+  def self.csv_columns
+    [:name, :latitude, :longitude, :city, :county, :state, :country]
+  end
+
+  def as_csv
+    export_attributes
+  end
+
+  def export_attributes
+    {
+      name: name,
+      latitude: location.y,
+      longitude: location.x,
+      city: city,
+      county: county,
+      state: state,
+      country: country,
+    }
+  end
+
+  def set_case_insensitive
+    self.lname = self.name.downcase if self.name_changed?
   end
 end

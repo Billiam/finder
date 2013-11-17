@@ -20,6 +20,7 @@ define(function(require) {
     Table.prototype.init = function(selector, options) {
         var $table = $(selector);
         this.table = $table.dataTable({
+            "aaSorting": [],
             "aLengthMenu": [[50, 100, 500, -1], [50, 100, 500, "All"]],
             "iDisplayLength": 50,
             "fnDrawCallback": options.drawCallback.bind($table),

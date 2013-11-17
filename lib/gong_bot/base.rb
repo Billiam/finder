@@ -44,6 +44,8 @@ module GongBot
       yield :register, register.results
       yield :gong, gong.results
       yield :remove, remove.results
+
+      loggy.debug 'Bot completed'
     end
 
     def client

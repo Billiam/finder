@@ -34,7 +34,7 @@ module AlFinder
       role.allow   '/sessions'
     end
 
-    access_control.roles_for :content_manager do |role|
+    access_control.roles_for :moderator do |role|
       role.project_module :points, '/points'
     end
 

@@ -5,7 +5,7 @@ module GongBot::Parser
         {
           name:   message[:author],
           pm:     true,
-          search: message[:message],
+          search: message[:message].strip,
         }
       end
     end
