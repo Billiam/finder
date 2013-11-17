@@ -10,6 +10,7 @@ class SpreadsheetImporter
   def run
     points = []
     CSV.foreach(@path, headers: true) do |row|
+      row['username'].strip!
       if row['username'].empty?
         loggy.debug "Missing username: #{row}"
         next
