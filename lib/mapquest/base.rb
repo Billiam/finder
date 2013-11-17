@@ -21,7 +21,7 @@ module Mapquest
   # Remove recognized special characters from mapquest
   def format_search(value)
     #remove unacceptable characters
-    value = value.gsub(/[`:"~!@#%&=_;',\.\/\{\}\|\+\<\>\?\$\^\*\(\)\-\[\]\\]/,'').gsub(/\s+/,' ')
+    value = value.gsub(/[`:"~!@#%&=_;'\.\/\{\}\|\+\<\>\?\$\^\*\(\)\[\]\\]/,'').gsub(/\s+/,' ')
     value.strip
   end
 
