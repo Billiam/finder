@@ -13,7 +13,8 @@ define(function(require) {
      * @constructor
      */
     var Point = function(data) {
-        this.row = data;
+        this._row = data;
+        this._location = undefined;
     };
 
     /**
@@ -23,16 +24,39 @@ define(function(require) {
      * @returns {*}
      */
     Point.prototype.get = function(key) {
-        return this.row[key];
+        return this._row[key];
     };
 
+    /**
+     * Fetch the row location as a string
+     *
+     * @returns {String}
+     */
+    Point.prototype.location = function() {
+        if (this._location === undefined) {
+            this._location = [
+                this._row.city,
+                this._row.county,
+                this._row.state,
+                this._row.country
+            ].filter(function(i) { return i !== "" }).join(', ');
+        }
+
+        return this._location;
+    };
+
+    /**
+     * Fetch the row data as an array
+     *
+     * @returns {Array}
+     */
     Point.prototype.toTable = function() {
         return [
-            this.row.name,
-            this.row.city,
-            this.row.county,
-            this.row.state,
-            this.row.country
+            this._row.name,
+            this._row.city,
+            this._row.county,
+            this._row.state,
+            this._row.country
         ]
     };
 

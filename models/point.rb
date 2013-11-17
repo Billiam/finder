@@ -95,7 +95,7 @@ class Point
   end
 
   def self.csv_columns
-    [:name, :latitude, :longitude, :city, :county, :state, :country, :place]
+    [:name, :latitude, :longitude, :city, :county, :state, :country]
   end
 
   def as_csv
@@ -111,7 +111,6 @@ class Point
       county: county,
       state: state,
       country: country,
-      place: location_name,
     }
   end
 

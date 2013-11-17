@@ -5,6 +5,7 @@
 define(function(require) {
     'use strict';
     require('polyfills/function.bind');
+    require('polyfills/array.filter');
     require('foundation');
 
     var $ = require('jquery');
