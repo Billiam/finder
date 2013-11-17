@@ -49,6 +49,10 @@ class Point
     public_send get_filter(type)
   end
 
+  def self.approve
+    unmoderated.update_all status: 'approved'
+  end
+
   def active?
     status == 'approved'
   end

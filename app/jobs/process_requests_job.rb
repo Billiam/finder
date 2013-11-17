@@ -18,11 +18,9 @@ class ProcessRequestsJob
     requests
   end
 
-  def requests
-    @requests ||= self.class.fetch_requests
-  end
-
   def run
+    requests = Actor.current.class.fetch_requests
+
     #convert messages array to author => message
     request_data = Hash[requests.map{ |m| [m.name, m.search] } ]
 
