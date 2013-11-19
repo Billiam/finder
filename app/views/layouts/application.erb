@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>AL Finder</title>
+  <title>RainbowRaptors</title>
   <% if ENV['COMPILED'] == 'true' %>
     <link rel="stylesheet" href="build/main.css" />
     <!--[if lte IE 8]> <link rel="stylesheet" href="build/main.ie.css" /><![endif]-->
@@ -16,6 +16,7 @@
   <script src="js/vendor/custom.modernizr.js"></script>
 </head>
 <body>
+<%= partial 'shared/nav' %>
 <div class="row main">
 <%= yield %>
 </div>
