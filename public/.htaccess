@@ -1,0 +1,8 @@
+<ifModule mod_headers.c>
+  <FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)$">
+    Header set Cache-Control "max-age=31536000, public"
+  </FilesMatch>
+  <FilesMatch "\.(csv)$">
+    Header set Cache-Control "max-age=600, public"
+  </FilesMatch>
+</ifModule>

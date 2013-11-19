@@ -1,5 +1,5 @@
 body {
-    background: url(/img/bg.png);
+    background: url(/img/bg.gif);
     overflow-y: scroll;
 }
 .main {
@@ -110,4 +110,13 @@ a.external-link {
     height: 16px;
     display: inline-block;
     background: transparent url(../img/external.gif) no-repeat scroll;
+}
+
+.contain-to-grid {
+    background: transparent url(../img/menu_bg.gif) repeat scroll;
+}
+
+.title-area .name {
+    position:relative;
+    top:14px;
 }
