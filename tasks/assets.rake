@@ -30,18 +30,18 @@ namespace :assets do
     end
 
     task :rjs => :environment do
-      res = %x[cd #{Padrino.root('public/js')} && node #{Padrino.root('build/r.js')} -o mainConfigFile=config.js baseUrl=. name=vendor/almond.js include=main out=../build/app.js optimize=uglify2]
+      res = %x[cd #{Padrino.root('public/javascripts')} && node #{Padrino.root('build/r.js')} -o mainConfigFile=config.js baseUrl=. name=vendor/almond.js include=main out=../build/app.js optimize=uglify2]
       raise RuntimeError, "JS compilation with r.js failed. \n #{res}" unless $?.success?
     end
 
-    task :stylesheets do
+    task :css do
       require 'csso'
       %w(main.css main.ie.css).each do |css|
         tmp_file = Padrino.root('tmp', css)
-        in_file = Padrino.root('public/css', css)
+        in_file = Padrino.root('public/stylesheets', css)
         out_file = Padrino.root('public/build', css)
 
-        res = %x[cd #{Padrino.root} && node #{Padrino.root('build/r.js')} -o cssIn=#{in_file} out=#{tmp_file} cssPrefix=/css cssKeepLicense=true preserveLicenseComments=true]
+        res = %x[cd #{Padrino.root} && node #{Padrino.root('build/r.js')} -o cssIn=#{in_file} out=#{tmp_file} cssPrefix=/stylesheets cssKeepLicense=true preserveLicenseComments=true]
 
         raise RuntimeError, "r.js CSS compilation failed" unless $?.success?
         File.write(out_file, Csso.optimize(File.read(tmp_file), true))
