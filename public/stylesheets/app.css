@@ -105,10 +105,10 @@ body {
     border-radius: 0;
 }
 a.external-link {
-    width: 16px;
-    height: 16px;
+    padding-right: 16px;
+    min-height: 16px;
     display: inline-block;
-    background: transparent url(../img/external.gif) no-repeat scroll;
+    background: transparent url(../img/external.gif) no-repeat scroll right center;
 }
 
 .contain-to-grid {
