@@ -1,41 +1,26 @@
-/**
- * @fileOverview App module definition
- */
-
 define(function(require) {
     'use strict';
-    require('polyfills/function.bind');
-    require('polyfills/array.filter');
-    require('foundation');
-
-    var $ = require('jquery');
     var Map = require('controller/map');
     var Point = require('model/point');
     var Table = require('controller/table');
     var ExternalLinks = require('lib/externalLinks');
+
     /**
      * Initial application setup.
      *
      * @class App
      * @constructor
      */
-    var App = function() {
-
-    };
-
-    App.prototype.initFoundation = function() {
-        $(document).foundation();
+    var Locator = function() {
     };
 
     /**
-     * Initializes the application and kicks off loading of prerequisites.
+     * Initialize the locator controller
      *
      * @method init
      * @private
      */
-    App.prototype.init = function() {
-        this.initFoundation();
-        ExternalLinks.init();
+    Locator.prototype.init = function() {
         var map = new Map('#map', {});
 
         var table = new Table('.datatable', {
@@ -50,5 +35,5 @@ define(function(require) {
         });
     };
 
-    return App;
+    return Locator;
 });

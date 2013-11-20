@@ -7,28 +7,35 @@
   <meta name="viewport" content="width=device-width">
   <title>RainbowRaptors</title>
   <% if ENV['COMPILED'] == 'true' %>
-    <link rel="stylesheet" href="build/main.css" />
-    <!--[if lte IE 8]> <link rel="stylesheet" href="build/main.ie.css" /><![endif]-->
+    <link rel="stylesheet" href="<%= asset_path :build, 'main.css' %>" />
+    <!--[if lte IE 8]> <link rel="stylesheet" href="<%= asset_path :build, 'main.ie.css' %>" /><![endif]-->
   <% else %>
-    <link rel="stylesheet" href="css/main.css" />
-    <!--[if lte IE 8]> <link rel="stylesheet" href="css/main.ie.css" /><![endif]-->
+    <%= stylesheet_link_tag 'main' %>
+    <!--[if lte IE 8]> <%= stylesheet_link_tag 'main.ie' %> <![endif]-->
   <% end %>
-  <script src="js/vendor/custom.modernizr.js"></script>
+  <%= javascript_include_tag 'vendor/custom.modernizr' %>
 </head>
+
 <body>
 <%= partial 'shared/nav' %>
 <div class="row main">
 <%= yield %>
 </div>
 
+<% if content_for? :js_controller %>
+<script>
+  var require = { config: { app: {
+    controller: "<%= yield_content(:js_controller).try(:strip) %>",
+  }}};
+</script>
+<% end %>
 <% if ENV['COMPILED'] == 'true' %>
-    <script src="build/app.js"></script>
+    <script src="<%= asset_path :build, 'app.js' %>"></script>
 <% else %>
-  <script src="js/vendor/require.js"></script>
-  <script src="js/config.js"></script>
+  <%= javascript_include_tag %w(vendor/require config) %>
   <script>
     require.config({
-      baseUrl: 'js/',
+      baseUrl: 'javascripts/',
       waitSeconds: 120
     });
     require(['main']);
