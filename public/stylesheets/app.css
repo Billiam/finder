@@ -3,7 +3,6 @@ body {
     overflow-y: scroll;
 }
 .main {
-    padding-top: 20px;
     background: #fff;
 }
 .map {
@@ -115,8 +114,14 @@ a.external-link {
 .contain-to-grid {
     background: transparent url(../img/menu_bg.gif) repeat scroll;
 }
-
-.title-area .name {
-    position:relative;
-    top:14px;
+#logo h1 {
+    padding: 0 15px;
+    margin: 0;
+    top: 16px;
+    height:45px;
+    position: absolute;
+    z-index: 100;
+}
+#logo img {
+    display: block;
 }

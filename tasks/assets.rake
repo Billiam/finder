@@ -34,7 +34,7 @@ namespace :assets do
       raise RuntimeError, "JS compilation with r.js failed. \n #{res}" unless $?.success?
     end
 
-    task :css do
+    task :stylesheets do
       require 'csso'
       %w(main.css main.ie.css).each do |css|
         tmp_file = Padrino.root('tmp', css)
