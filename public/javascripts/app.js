@@ -11,8 +11,7 @@ define(function(require) {
     var $ = require('jquery');
     var ExternalLinks = require('lib/externalLinks');
     var LocatorController = require('controller/locator');
-    var module = require('module');
-    var config = module.config();
+    var config = window.CONFIG;
 
     var controllers = {
         locator: LocatorController
@@ -51,6 +50,9 @@ define(function(require) {
      * @method initController
      */
     App.prototype.initController = function() {
+        if ( ! config) {
+            return false;
+        }
         var controller = config['controller'];
         var action = config['action'];
 
