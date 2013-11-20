@@ -1,19 +1,23 @@
 <div class="contain-to-grid">
-<nav class="top-bar">
-  <ul class="title-area">
-    <li class="name"><h1>
+  <section id="logo" class="row">
+    <h1>
       <% link_to url_for(:points, :index) do %>
         <%= image_tag '/img/heading.png', alt: "RainbowRaptors text" %>
       <% end %>
-    </h1></li>
-  </ul>
-  <section class="top-bar-section">
-    <ul class="right">
-      <li class="divider hide-for-small"></li>
-      <li>
-        <%= link_to 'Help', url_for(:page, :help) %>
-      </li>
-    </ul>
+  </h1>
   </section>
-</nav>
+  <nav class="top-bar">
+    <ul class="title-area">
+      <li class="name"></li>
+      <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+    </ul>
+    <section class="top-bar-section">
+      <ul class="right">
+        <li class="divider hide-for-small"></li>
+        <li>
+          <%= link_to 'Help', url_for(:page, :help) %>
+        </li>
+      </ul>
+    </section>
+  </nav>
 </div>
