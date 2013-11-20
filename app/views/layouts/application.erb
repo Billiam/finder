@@ -22,13 +22,11 @@
 <%= yield %>
 </div>
 
-<% if content_for? :js_controller %>
 <script>
-  var require = { config: { app: {
+  var CONFIG = {
     controller: "<%= yield_content(:js_controller).try(:strip) %>",
-  }}};
+  };
 </script>
-<% end %>
 <% if ENV['COMPILED'] == 'true' %>
     <script src="<%= asset_path :build, 'app.js' %>"></script>
 <% else %>
