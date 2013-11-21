@@ -9,6 +9,7 @@ source 'https://rubygems.org'
 # Project requirements
 gem 'rake'
 
+gem 'newrelic_moped', require: false
 gem 'newrelic_rpm', require: false
 
 # Component requirements
