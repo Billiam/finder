@@ -3,19 +3,12 @@ class PollBotJob
   include Lockable
   include Logging
 
+  include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
+
   lock_with :bot_lock
 
   def perform
-    success = lock do
-      bot = GongBot::Base.new
-
-      bot.run do |action, results|
-        if [:remove, :gong, :register].include?(action)
-          self.class.public_send action, results
-        end
-      end
-    end
-
+    success = lock { run }
     unless success
       loggy.warn "Bot poll already in progress"
     end
@@ -34,4 +27,17 @@ class PollBotJob
 
   def self.gong data
   end
+
+  protected
+  def run
+    bot = GongBot::Base.new
+
+    bot.run do |action, results|
+      if [:remove, :gong, :register].include?(action)
+        self.class.public_send action, results
+      end
+    end
+  end
+
+  add_transaction_tracer :run, :category => :task
 end

@@ -11,10 +11,8 @@ Bundler.require(:default, PADRINO_ENV)
 app_env = Padrino.root('config/environment.rb')
 load(app_env) if File.exists?(app_env)
 
-if PADRINO_ENV == 'production'
-  require 'rewrelic_moped'
-  require 'newrelic_rpm'
-end
+require 'newrelic_moped'
+require 'newrelic_rpm'
 
 ##
 # ## Enable devel logging

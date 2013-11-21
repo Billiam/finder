@@ -3,6 +3,8 @@ class ProcessRequestsJob
   include Logging
   include Lockable
 
+  include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
+
   lock_with :geocode_lock
 
   def self.fetch_requests
@@ -62,4 +64,6 @@ class ProcessRequestsJob
       loggy.warn "Geocoding already in progress"
     end
   end
+
+  add_transaction_tracer :run, :category => :task
 end
