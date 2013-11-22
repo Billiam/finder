@@ -30,6 +30,8 @@ gem 'daemons', '~> 1.1.9'
 # Test requirements
 group :development, :test do
   gem 'rspec'
+  gem "mongoid-rspec", "~> 1.9.0"
+  gem 'factory_girl'
   gem 'rack-test', :require => 'rack/test'
 end
 

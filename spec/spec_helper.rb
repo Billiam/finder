@@ -1,10 +1,23 @@
 PADRINO_ENV = 'test' unless defined?(PADRINO_ENV)
 require File.expand_path(File.dirname(__FILE__) + "/../config/boot")
 
+
 RSpec.configure do |conf|
   conf.include Rack::Test::Methods
+
+  # Clean/Reset Mongoid DB prior to running each test.
+  conf.before(:each) do
+    Mongoid::Sessions.default.collections.select {|c| c.name !~ /system/}.each {|c| c.find.remove_all}
+  end
 end
 
+Dir["./spec/support/**/*.rb"].sort.each {|f| require f}
+
+FactoryGirl.definition_file_paths = [
+    File.join(Padrino.root, 'spec', 'factories')
+]
+
+FactoryGirl.find_definitions
 # You can use this method to custom specify a Rack app
 # you want rack-test to invoke:
 #
