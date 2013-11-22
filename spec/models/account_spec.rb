@@ -49,6 +49,14 @@ describe Account, type: :model do
   end
 
   describe ".authenticate" do
+    let!(:user) { FactoryGirl.create :account, email: 'test@test.com', password: 'banana', password_confirmation: 'banana' }
 
+    it 'rejects invalid credentials' do
+      expect(Account.authenticate('best@test.com','banana')).to be_nil
+    end
+
+    it 'accepts valid credentials' do
+      expect(Account.authenticate('Test@test.com','banana')).to eql(user)
+    end
   end
 end
