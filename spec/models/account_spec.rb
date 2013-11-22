@@ -19,11 +19,36 @@ describe Account, type: :model do
   it { should validate_format_of(:email).to_allow("test@test.com").not_to_allow("test.com") }
   it { should validate_inclusion_of(:role).to_allow("admin", "moderator") }
 
-  context "after creation" do
-    let(:user) { FactoryGirl.create(:account) }
+  describe "password validation" do
+    subject(:user) { FactoryGirl.create(:account, password: 'banana', password_confirmation: 'banana') }
 
-    it "encrypts the user password" do
-      expect(user.crypted_password).not_to be_empty
+    its(:crypted_password) { should_not be_empty }
+
+    describe "#has_password?" do
+      it "allows valid passwords" do
+        expect(user.has_password?('banana')).to be_true
+      end
+
+      it "rejects bad passwords" do
+        expect(user.has_password?('bananas')).to be_false
+      end
     end
+  end
+
+  describe ".find_by_id" do
+    before(:each) { FactoryGirl.create :account, :_id => 'banana' }
+    subject { lambda { |id| Account.find_by_id(id) } }
+
+    context 'with valid id' do
+      it { expect(subject.call('banana')).to be_a(Account) }
+    end
+
+    context 'with invalid id' do
+      it { expect(subject.call('not_banana')).to be_nil }
+    end
+  end
+
+  describe ".authenticate" do
+
   end
 end
