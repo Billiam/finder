@@ -16,6 +16,7 @@ describe Request, type: :model do
   it { should have_index_for(status: 1, created_at: -1) }
 
   it { should be_timestamped_document }
+  it { should be_bulk_upsertable_document }
 
   it_behaves_like 'batch upsertable'
 
