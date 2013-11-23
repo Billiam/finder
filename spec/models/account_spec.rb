@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Account, type: :model do
   it 'has a valid factory' do
-    FactoryGirl.build(:account).should be_valid
+    build(:account).should be_valid
   end
 
   it { should have_fields(:name, :surname, :email, :crypted_password, :role) }
@@ -20,7 +20,7 @@ describe Account, type: :model do
   it { should validate_inclusion_of(:role).to_allow("admin", "moderator") }
 
   describe "password validation" do
-    let(:user) { FactoryGirl.create(:account, password: 'banana', password_confirmation: 'banana') }
+    let(:user) { create :account, password: 'banana', password_confirmation: 'banana' }
 
     it 'has a crypted password' do
       expect(user.crypted_password).to be_present
@@ -38,7 +38,7 @@ describe Account, type: :model do
   end
 
   describe ".find_by_id" do
-    before(:each) { FactoryGirl.create :account, :_id => 'banana' }
+    before(:each) { create :account, :_id => 'banana' }
     def find(id)
       Account.find_by_id(id)
     end
@@ -53,7 +53,7 @@ describe Account, type: :model do
   end
 
   describe ".authenticate" do
-    let!(:user) { FactoryGirl.create :account, email: 'test@test.com', password: 'banana', password_confirmation: 'banana' }
+    let!(:user) { create :account, email: 'test@test.com', password: 'banana', password_confirmation: 'banana' }
 
     it 'rejects invalid credentials' do
       expect(Account.authenticate('best@test.com','banana')).to be_nil
