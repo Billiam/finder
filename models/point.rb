@@ -4,6 +4,7 @@ class Point
   include Mongoid::Document
   include Mongoid::Timestamps # adds created_at and updated_at fields
   include Mongoid::Geospatial
+  include MongoidBatch::Upsert
 
   attr_accessible :status, as: :moderator
   attr_accessible :name, :status, :location, :country, :county, :city, :state, :search, as: [:default, :admin]
@@ -101,13 +102,6 @@ class Point
         csv << i.as_csv.values
       end
     end
-  end
-
-  def self.bulk_upsert(rows)
-    update, insert = rows.partition(&:persisted?)
-    insert.each { |i| i.created_at ||= Time.now }
-    collection.insert(insert.map(&:as_document)) unless insert.empty?
-    update.each(&:save)
   end
 
   def active?
