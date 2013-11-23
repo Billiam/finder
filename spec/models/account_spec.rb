@@ -44,7 +44,7 @@ describe Account, type: :model do
     end
 
     it 'finds existing accounts by id' do
-      expect(find('banana'))to be_a(Account)
+      expect(find('banana')).to be_a(Account)
     end
 
     it 'is nil without an account' do

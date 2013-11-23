@@ -40,7 +40,7 @@ class SpreadsheetImporter
       end
     end
 
-    update, insert = Request.bulk_upsert points
+    update, insert = Request.bulk_upsert! points
     loggy.debug "New Requests: (#{insert.length}), Updated Requests: (#{update.length})"
   end
 end
