@@ -3,8 +3,8 @@ module MongoidBatch
     extend ActiveSupport::Concern
 
     module ClassMethods
-      def bulk_upsert!(rows)
-        return false unless rows.all(&:valid?)
+      def bulk_upsert(rows)
+        return false unless rows.all?(&:valid?)
         bulk_upsert!(rows)
       end
 

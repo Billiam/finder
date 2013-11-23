@@ -17,6 +17,8 @@ describe Request, type: :model do
 
   it { should be_timestamped_document }
 
+  it_behaves_like 'batch upsertable'
+
   describe '.ready' do
     %w(new processing success fail).each do |status|
       let!("#{status}_request".to_sym) { create(:request, status: status) }
