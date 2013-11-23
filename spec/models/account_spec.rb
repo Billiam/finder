@@ -20,9 +20,11 @@ describe Account, type: :model do
   it { should validate_inclusion_of(:role).to_allow("admin", "moderator") }
 
   describe "password validation" do
-    subject(:user) { FactoryGirl.create(:account, password: 'banana', password_confirmation: 'banana') }
+    let(:user) { FactoryGirl.create(:account, password: 'banana', password_confirmation: 'banana') }
 
-    its(:crypted_password) { should_not be_empty }
+    it 'has a crypted password' do
+      expect(user.crypted_password).to be_present
+    end
 
     describe "#has_password?" do
       it "allows valid passwords" do
@@ -37,14 +39,16 @@ describe Account, type: :model do
 
   describe ".find_by_id" do
     before(:each) { FactoryGirl.create :account, :_id => 'banana' }
-    subject { lambda { |id| Account.find_by_id(id) } }
-
-    context 'with valid id' do
-      it { expect(subject.call('banana')).to be_a(Account) }
+    def find(id)
+      Account.find_by_id(id)
     end
 
-    context 'with invalid id' do
-      it { expect(subject.call('not_banana')).to be_nil }
+    it 'finds existing accounts by id' do
+      expect(find('banana'))to be_a(Account)
+    end
+
+    it 'is nil without an account' do
+      expect(find('not_banana')).to be_nil
     end
   end
 
