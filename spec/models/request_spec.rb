@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Request, type: :model do
   it 'has a valid factory' do
-    FactoryGirl.build(:account).should be_valid
+    build(:request).should be_valid
   end
 
   it { should have_fields(:name, :lname, :pm, :search) }
@@ -17,8 +17,66 @@ describe Request, type: :model do
 
   it { should be_timestamped_document }
 
-  describe '.ready'
-  describe '.by_name'
-  describe '.bulk_upsert'
-  describe '#set_case_insensitive'
+  describe '.ready' do
+    %w(new processing success fail).each do |status|
+      let!("#{status}_request".to_sym) { create(:request, status: status) }
+    end
+
+    it "includes requests with new flag" do
+      Request.ready.all.entries.should include(new_request)
+    end
+
+    %w(processing success fail).each do |status|
+      it "excludes #{status} requests" do
+        Request.ready.all.entries.should_not include(send("#{status}_request".to_sym))
+      end
+    end
+  end
+
+  describe '.by_name' do
+    %w(user_1 user_2 user_3).each do |name|
+      let!(name) { create :request, name: name }
+    end
+
+    def find(name)
+      Request.by_name(name).all.entries
+    end
+
+    it 'finds existing request by name' do
+      expect(find('UsEr_1')).to eql([user_1])
+    end
+
+    it 'finds multiple requests by name' do
+      expect(find(['UsEr_1', 'user_2'])).to match_array([user_1, user_2])
+    end
+
+    it 'is empty for non-existant request' do
+      expect(find('user_4')).to eql([])
+    end
+  end
+
+  describe 'before_validation' do
+    it 'runs callbacks' do
+      request = build(:request)
+      expect(request).to receive(:set_case_insensitive)
+      request.run_callbacks(:validation) { false }
+    end
+  end
+
+  describe '#set_case_insensitive' do
+    it 'sets a lowercased name' do
+      request = build(:request, name: 'BANANA')
+
+      expect(request).to receive(:lname=).with('banana')
+
+      request.send(:set_case_insensitive)
+    end
+
+    it 'does not lowercase name when name has not changed' do
+      request = create(:request)
+      expect(request).not_to receive(:lname=)
+
+      request.send(:set_case_insensitive)
+    end
+  end
 end
