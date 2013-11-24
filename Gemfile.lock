@@ -194,6 +194,7 @@ DEPENDENCIES
   rack-test
   rake
   rspec
+  simplecov
   snoo
   sucker_punch (~> 1.0)
   will_paginate-bootstrap (~> 1.0.0)
