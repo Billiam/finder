@@ -55,12 +55,12 @@ class Point
     :enabled
   end
 
-  def self.by_name(name)
-    self.in(lname: Array(name).map(&:downcase))
-  end
-
   def self.filter(type)
     public_send get_filter(type)
+  end
+
+  def self.by_name(name)
+    self.in(lname: Array(name).map(&:downcase))
   end
 
   def self.approve
@@ -92,6 +92,10 @@ class Point
     map_reduce(map, reduce).out(inline: true).map { |i| i['value'] }
   end
 
+  def self.csv_columns
+    [:name, :latitude, :longitude, :city, :county, :state, :country]
+  end
+
   def self.to_csv
     require 'csv'
 
@@ -118,10 +122,6 @@ class Point
 
   def to_s
     location_name
-  end
-
-  def self.csv_columns
-    [:name, :latitude, :longitude, :city, :county, :state, :country]
   end
 
   def as_csv
