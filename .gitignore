@@ -10,5 +10,6 @@ db/*.db
 config/environment.rb
 public/build/*
 !public/build/.gitkeep
+coverage
 Gemfile.local
 Gemfile.local.lock

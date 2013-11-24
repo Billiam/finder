@@ -31,7 +31,10 @@ group :development do
   gem 'guard-rspec', require: false
 end
 
-# Test requirements
+group :test do
+  gem 'coveralls', require: false
+end
+
 group :development, :test do
   gem 'rspec'
   gem "mongoid-rspec", "~> 1.9.0"

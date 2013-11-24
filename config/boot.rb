@@ -1,5 +1,5 @@
 # Defines our constants
-PADRINO_ENV  = ENV['PADRINO_ENV'] ||= ENV['RACK_ENV'] ||= 'development'  unless defined?(PADRINO_ENV)
+PADRINO_ENV  = ENV['PADRINO_ENV'] ||= ENV['RACK_ENV'] ||= 'production'  unless defined?(PADRINO_ENV)
 PADRINO_ROOT = File.expand_path('../..', __FILE__) unless defined?(PADRINO_ROOT)
 
 # Load our dependencies
@@ -10,9 +10,6 @@ Bundler.require(:default, PADRINO_ENV)
 
 app_env = Padrino.root('config/environment.rb')
 load(app_env) if File.exists?(app_env)
-
-require 'newrelic_moped'
-require 'newrelic_rpm'
 
 ##
 # ## Enable devel logging
@@ -45,7 +42,9 @@ Padrino.before_load do
   require 'will_paginate_mongoid'
   require 'will_paginate/view_helpers/sinatra'
   include WillPaginate::Sinatra::Helpers
+
   Padrino.set_load_paths Padrino.root('service'), Padrino.root('app/jobs')
+  Padrino.require_dependencies "#{Padrino.root}/config/initializers/**/*.rb"
 end
 
 ##

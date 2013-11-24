@@ -1,6 +1,9 @@
 PADRINO_ENV = 'test' unless defined?(PADRINO_ENV)
-require File.expand_path(File.dirname(__FILE__) + "/../config/boot")
 
+require 'coveralls'
+Coveralls.wear!
+
+require File.expand_path(File.dirname(__FILE__) + "/../config/boot")
 
 FactoryGirl.definition_file_paths = [
     File.join(Padrino.root, 'spec', 'factories')
@@ -20,15 +23,6 @@ end
 
 Dir["./spec/support/**/*.rb"].sort.each {|f| require f}
 
-# You can use this method to custom specify a Rack app
-# you want rack-test to invoke:
-#
-#   app Speccy::App
-#   app Speccy::App.tap { |a| }
-#   app(Speccy::App) do
-#     set :foo, :bar
-#   end
-#
 def app(app = nil, &blk)
   @app ||= block_given? ? app.instance_eval(&blk) : app
   @app ||= Padrino.application
