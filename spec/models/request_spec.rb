@@ -60,7 +60,7 @@ describe Request, type: :model do
 
   describe 'before_validation' do
     it 'runs callbacks' do
-      request = build(:request)
+      request = build_stubbed(:request)
       expect(request).to receive(:set_case_insensitive)
       request.run_callbacks(:validation) { false }
     end
@@ -68,7 +68,7 @@ describe Request, type: :model do
 
   describe '#set_case_insensitive' do
     it 'sets a lowercased name' do
-      request = build(:request, name: 'BANANA')
+      request = build_stubbed(:request, name: 'BANANA')
 
       expect(request).to receive(:lname=).with('banana')
 
