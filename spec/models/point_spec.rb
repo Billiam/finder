@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Point, type: :model do
   it 'has a valid factory' do
-    build(:point).should be_valid
+    expect(build(:point)).to be_valid
   end
 
   it do
@@ -58,12 +58,12 @@ describe Point, type: :model do
       end
 
       it "includes #{status} points" do
-        Point.send(scope).all.entries.should include(send("#{status}_point"))
+        expect(Point.send(scope).all.entries).to include(send("#{status}_point"))
       end
 
       (statuses.keys - [status]).each do |reject_status|
         it "excludes #{reject_status} points" do
-          Point.send(scope).all.entries.should_not include(send("#{reject_status}_point"))
+          expect(Point.send(scope).all.entries).not_to include(send("#{reject_status}_point"))
         end
       end
 
