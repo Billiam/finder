@@ -12,7 +12,14 @@ FactoryGirl.define do
     role 'moderator'
   end
 
-  factory :admin do
+  factory :admin, class: Account do
+    pass = SecureRandom.urlsafe_base64
+
+    name "John"
+    surname "Doe"
+    sequence(:email) { |n| "person#{n}@example.com" }
+    password pass
+    password_confirmation pass
     role 'admin'
   end
 end
