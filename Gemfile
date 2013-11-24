@@ -27,6 +27,10 @@ gem 'sucker_punch', '~> 1.0'
 gem 'clockwork',  '~> 0.7.0'
 gem 'daemons', '~> 1.1.9'
 
+group :development do
+  gem 'guard-rspec', require: false
+end
+
 # Test requirements
 group :development, :test do
   gem 'rspec'

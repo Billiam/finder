@@ -10,3 +10,5 @@ db/*.db
 config/environment.rb
 public/build/*
 !public/build/.gitkeep
+Gemfile.local
+Gemfile.local.lock
