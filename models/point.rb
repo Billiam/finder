@@ -4,6 +4,7 @@ class Point
   include Mongoid::Document
   include Mongoid::Timestamps # adds created_at and updated_at fields
   include Mongoid::Geospatial
+  include MongoidBatch::Upsert
 
   attr_accessible :status, as: :moderator
   attr_accessible :name, :status, :location, :country, :county, :city, :state, :search, as: [:default, :admin]
@@ -54,12 +55,12 @@ class Point
     :enabled
   end
 
-  def self.by_name(name)
-    self.in(lname: Array(name).map(&:downcase))
-  end
-
   def self.filter(type)
     public_send get_filter(type)
+  end
+
+  def self.by_name(name)
+    self.in(lname: Array(name).map(&:downcase))
   end
 
   def self.approve
@@ -91,6 +92,10 @@ class Point
     map_reduce(map, reduce).out(inline: true).map { |i| i['value'] }
   end
 
+  def self.csv_columns
+    [:name, :latitude, :longitude, :city, :county, :state, :country]
+  end
+
   def self.to_csv
     require 'csv'
 
@@ -101,13 +106,6 @@ class Point
         csv << i.as_csv.values
       end
     end
-  end
-
-  def self.bulk_upsert(rows)
-    update, insert = rows.partition(&:persisted?)
-    insert.each { |i| i.created_at ||= Time.now }
-    collection.insert(insert.map(&:as_document)) unless insert.empty?
-    update.each(&:save)
   end
 
   def active?
@@ -124,10 +122,6 @@ class Point
 
   def to_s
     location_name
-  end
-
-  def self.csv_columns
-    [:name, :latitude, :longitude, :city, :county, :state, :country]
   end
 
   def as_csv

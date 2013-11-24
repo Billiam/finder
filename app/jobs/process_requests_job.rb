@@ -54,7 +54,7 @@ class ProcessRequestsJob
     results.select!(&:valid?)
 
     loggy.debug "Inserting #{results.length} points"
-    Point.bulk_upsert results
+    Point.bulk_upsert! results
 
     requests.each(&:delete)
   end

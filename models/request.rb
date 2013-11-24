@@ -3,6 +3,7 @@ class Request
 
   include Mongoid::Document
   include Mongoid::Timestamps # adds created_at and updated_at fields
+  include MongoidBatch::Upsert # adds bulk_upsert methods
 
   # field <name>, :type => <type>, :default => <value>
   field :name, :type => String
@@ -32,15 +33,6 @@ class Request
 
   def self.by_name(name)
     self.in(lname: Array(name).map(&:downcase))
-  end
-
-  def self.bulk_upsert(rows)
-    update, insert = rows.partition(&:persisted?)
-    insert.each { |i| i.created_at ||= Time.now }
-    collection.insert(insert.map(&:as_document)) unless insert.empty?
-    update.each(&:save)
-
-    [update, insert]
   end
 
   def set_case_insensitive

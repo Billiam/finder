@@ -27,9 +27,19 @@ gem 'sucker_punch', '~> 1.0'
 gem 'clockwork',  '~> 0.7.0'
 gem 'daemons', '~> 1.1.9'
 
-# Test requirements
+group :development do
+  gem 'guard-rspec', require: false
+end
+
+group :test do
+  gem 'simplecov', require: false
+  gem 'coveralls', require: false
+end
+
 group :development, :test do
   gem 'rspec'
+  gem "mongoid-rspec", "~> 1.9.0"
+  gem 'factory_girl'
   gem 'rack-test', :require => 'rack/test'
 end
 
