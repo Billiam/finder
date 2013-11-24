@@ -1,7 +1,6 @@
 module Lockable
   extend ActiveSupport::Concern
 
-
   included do
     cattr_accessor :lock_model
   end
