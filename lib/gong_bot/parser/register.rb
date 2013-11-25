@@ -1,17 +1,20 @@
 module GongBot::Parser
-  class Register < Base
-    def self.user_data(messages)
-      messages.map do |message|
-        {
-          name:   message[:author],
-          pm:     true,
-          search: message[:message].strip,
-        }
-      end
+  module Register
+    extend self
+
+    def from_messages(messages)
+      user_data(messages)
     end
 
-    def self.from_messages(messages)
-      self.new user_data(messages)
+    protected
+    def user_data(messages)
+      messages.map do |message|
+        {
+            name:   message[:author],
+            pm:     true,
+            search: message[:message].strip,
+        }
+      end
     end
   end
 end

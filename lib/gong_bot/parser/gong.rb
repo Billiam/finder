@@ -1,16 +1,19 @@
 module GongBot::Parser
-  class Gong < Base
-    def self.user_data(messages)
-      messages.map do |m|
-        {
-          username: m[:author],
-          date:     m[:date],
-        }
-      end
+  module Gong
+    extend self
+
+    def from_messages(messages)
+      user_data(messages)
     end
 
-    def self.from_messages(messages)
-      self.new user_data(messages)
+    protected
+    def user_data(messages)
+      messages.map do |m|
+        {
+            username: m[:author],
+            date:     m[:date],
+        }
+      end
     end
   end
 end
