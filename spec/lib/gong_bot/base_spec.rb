@@ -194,6 +194,20 @@ describe GongBot::Base do
     end
 
     describe '#run' do
+      let(:bot) do
+        bot = super()
+        bot.stub(:inbox_requests) { double('inbox_result').as_null_object }
+        bot
+      end
+
+      let(:result_instance) do
+        double('Gongbot::Results').as_null_object
+      end
+
+      before(:each) do
+        GongBot::Results.stub(:new) { result_instance }
+      end
+
       it 'logs startup messages' do
         expect(log).to receive(:debug).with('Starting gong bot')
         bot.run
@@ -204,25 +218,8 @@ describe GongBot::Base do
         bot.run
       end
 
-
-      pending context 'when' do
-        let(:bot) do
-          bot = super()
-          bot.stub(:inbox_requests) { double('inbox_result').as_null_object }
-          bot
-        end
-
-        let(:result_instance) do
-          double('Gongbot::Results').as_null_object
-        end
-
-        before(:each) do
-          GongBot::Results.stub(:new) { result_instance }
-        end
-
-        it 'returns parsed results' do
-          expect(bot.run).to be(result_instance)
-        end
+      it 'returns parsed results' do
+        expect(bot.run).to be(result_instance)
       end
     end
 
@@ -294,12 +291,5 @@ describe GongBot::Base do
         end
       end
     end
-
-    pending '#notify_registration'
-
   end
-
-
-
-
 end
