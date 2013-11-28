@@ -41,6 +41,8 @@ group :development, :test do
   gem "mongoid-rspec", "~> 1.9.0"
   gem 'factory_girl'
   gem 'rack-test', :require => 'rack/test'
+  gem 'webmock', "~> 1.16.0"
+  gem 'vcr', "~> 2.8.0"
 end
 
 # Padrino Stable Gem

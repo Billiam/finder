@@ -2,13 +2,13 @@ PADRINO_ENV = 'test' unless defined?(PADRINO_ENV)
 
 require 'simplecov'
 require 'coveralls'
+require 'vcr'
 
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
     SimpleCov::Formatter::HTMLFormatter,
     Coveralls::SimpleCov::Formatter
 ]
 SimpleCov.start
-
 
 require File.expand_path(File.dirname(__FILE__) + "/../config/boot")
 
@@ -21,6 +21,7 @@ FactoryGirl.find_definitions
 RSpec.configure do |conf|
   conf.include Rack::Test::Methods
   conf.include FactoryGirl::Syntax::Methods
+  conf.extend VCR::RSpec::Macros
 
   # Clean/Reset Mongoid DB prior to running each test.
   conf.before(:each) do
