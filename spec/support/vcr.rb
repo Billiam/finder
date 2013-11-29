@@ -5,5 +5,5 @@ VCR.config do |c|
   c.stub_with :webmock
   c.ignore_localhost = true
   c.default_cassette_options = { :record => :none }
-  c.filter_sensitive_data('<MAPQUEST_API_KEY>') { URI.encode ENV['MAPQUEST_KEY'] }
+  c.filter_sensitive_data('<MAPQUEST_API_KEY>') { URI.encode(Configuration::MAPQUEST_KEY) }
 end

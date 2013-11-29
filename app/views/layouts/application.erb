@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>RainbowRaptors</title>
-  <% if ENV['COMPILED'] == 'true' %>
+  <% if Configuration::COMPILED %>
     <link rel="stylesheet" href="<%= asset_path :build, 'main.css' %>" />
     <!--[if lte IE 8]> <link rel="stylesheet" href="<%= asset_path :build, 'main.ie.css' %>" /><![endif]-->
   <% else %>
@@ -27,7 +27,7 @@
     controller: "<%= yield_content(:js_controller).try(:strip) %>",
   };
 </script>
-<% if ENV['COMPILED'] == 'true' %>
+<% if Configuration::COMPILED %>
     <script src="<%= asset_path :build, 'app.js' %>"></script>
 <% else %>
   <%= javascript_include_tag %w(vendor/require config) %>

@@ -7,7 +7,7 @@ describe Mapquest do
     end
 
     before(:each) do
-      ENV.stub(:[]).with("MAPQUEST_KEY") { 'abcd' }
+      stub_const('Configuration::MAPQUEST_KEY', 'abcd')
     end
 
     it 'should disable thumbnails' do
@@ -135,7 +135,7 @@ describe Mapquest do
         use_vcr_cassette "mapquest/error", record: :new_episodes
 
         before(:each) do
-          ENV.stub(:[]).with("MAPQUEST_KEY") { 'abcd' }
+          stub_const('Configuration::MAPQUEST_KEY', 'abcd')
         end
 
         it 'is forbidden' do

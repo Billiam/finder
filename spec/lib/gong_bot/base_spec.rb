@@ -225,9 +225,9 @@ describe GongBot::Base do
 
     describe '#client' do
       before(:each) do
-        ENV['BOT_USERNAME'] = 'username'
-        ENV['BOT_PASSWORD'] = 'password'
-        ENV['BOT_USERAGENT'] = 'useragent'
+        stub_const 'Configuration::BOT_USERNAME', 'username'
+        stub_const 'Configuration::BOT_PASSWORD', 'password'
+        stub_const 'Configuration::BOT_USERAGENT', 'useragent'
 
         bot.unstub(:client)
         client_class.stub(:new) { client }

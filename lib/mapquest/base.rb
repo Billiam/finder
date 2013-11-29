@@ -14,7 +14,7 @@ module Mapquest
     {
       thumbMaps: false,
       maxResults: 1,
-      key: ENV['MAPQUEST_KEY']
+      key: Configuration::MAPQUEST_KEY
     }
   end
 

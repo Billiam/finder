@@ -57,9 +57,9 @@ module GongBot
 
     def client
       @client ||= ::Snoo::Client.new({
-        username: ENV['BOT_USERNAME'],
-        password: ENV['BOT_PASSWORD'],
-        useragent: ENV['BOT_USERAGENT'],
+        username: Configuration::BOT_USERNAME,
+        password: Configuration::BOT_PASSWORD,
+        useragent: Configuration::BOT_USERAGENT,
       })
     end
 
