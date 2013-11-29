@@ -56,7 +56,7 @@ module Mapquest
 
       value = format_search value
       # Override known bad geocodes
-      location = Overrider.fix value
+      location = Override.fix value
 
       query[location] ||= []
       query[location] << key
