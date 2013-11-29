@@ -159,6 +159,22 @@ describe Mapquest do
       Mapquest.geocode addresses
     end
 
+    context 'with a connection error' do
+      let(:log) do
+        double("Logger").as_null_object
+      end
+
+      before(:each) do
+        Mapquest.stub(:loggy).and_return(log)
+        stub_request(:any, //).to_return(:status => [500, "Internal Server Error"])
+      end
+
+      it 'logs a warning' do
+        expect(log).to receive(:warn).with('Could not geocode addresses: 500')
+        Mapquest.geocode(user: 'an address')
+      end
+    end
+
     context 'with problematic address' do
       use_vcr_cassette "mapquest/geocode_problematic", record: :new_episodes
 
@@ -227,7 +243,26 @@ describe Mapquest do
 
   describe '.geocode_coarse' do
     let(:result) do
-      Mapquest.geocode addresses
+      Mapquest.geocode_coarse addresses
+    end
+
+    context 'with city level addresses' do
+      use_vcr_cassette "mapquest/geocode_city", record: :new_episodes
+
+      let(:addresses) do
+        {
+            user1: 'London, England',
+        }
+      end
+
+      it 'geocodes the address once' do
+        expect(Mapquest).to receive(:lookup).exactly(1).times.and_call_original
+        result
+      end
+
+      it 'provides city level address' do
+        expect(result[:user1].formatted).to eql('London, London, England, GB')
+      end
     end
 
     context 'with street level addresses' do
@@ -241,6 +276,11 @@ describe Mapquest do
 
       it 'returns a user result' do
         expect(result[:user1]).to be_instance_of(Mapquest::Result)
+      end
+
+      it 'geocodes the address twice' do
+        expect(Mapquest).to receive(:lookup).exactly(2).times.and_call_original
+        result
       end
 
       it 'provides city level addresses' do
