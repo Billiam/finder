@@ -1,0 +1,84 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://open.mapquestapi.com/geocoding/v1/batch?key=<MAPQUEST_API_KEY>&location=Backlass,%20Scotland&maxResults=1&thumbMaps=false
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: !binary |-
+        T0s=
+    headers:
+      !binary "U2VydmVy":
+      - !binary |-
+        QXBhY2hlLUNveW90ZS8xLjE=
+      !binary "QWNjZXNzLUNvbnRyb2wtQWxsb3ctT3JpZ2lu":
+      - !binary |-
+        Kg==
+      !binary "QWNjZXNzLUNvbnRyb2wtQWxsb3ctTWV0aG9kcw==":
+      - !binary |-
+        T1BUSU9OUyxHRVQsUE9TVA==
+      !binary "U2V0LUNvb2tpZQ==":
+      - !binary |-
+        SlNFU1NJT05JRD1BRTAzOTI2OTg4QkI0OEQyN0JGMzc0OUFDRkM2ODMyNDsg
+        UGF0aD0vOyBIdHRwT25seQ==
+      !binary "RXhwaXJlcw==":
+      - !binary |-
+        TW9uLCAyMCBEZWMgMTk5OCAwMTowMDowMCBHTVQ=
+      !binary "TGFzdC1Nb2RpZmllZA==":
+      - !binary |-
+        VGh1LCAyOCBOb3YgMjAxMyAwOTowOTo1MyBHTVQ=
+      !binary "Q2FjaGUtQ29udHJvbA==":
+      - !binary |-
+        bm8tY2FjaGUsIG11c3QtcmV2YWxpZGF0ZQ==
+      !binary "UHJhZ21h":
+      - !binary |-
+        bm8tY2FjaGU=
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbjtjaGFyc2V0PVVURi04
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MTI5Nw==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        VGh1LCAyOCBOb3YgMjAxMyAwOTowOTo1MyBHTVQ=
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJyZXN1bHRzIjpbeyJsb2NhdGlvbnMiOlt7ImxhdExuZyI6eyJsbmciOi04
+        My4xMzEyODEsImxhdCI6MzcuMzM1MDk2fSwiYWRtaW5BcmVhNCI6IlBlcnJ5
+        IiwiYWRtaW5BcmVhNVR5cGUiOiJDaXR5IiwiYWRtaW5BcmVhNFR5cGUiOiJD
+        b3VudHkiLCJhZG1pbkFyZWE1IjoiRHdhcmYiLCJzdHJlZXQiOiIiLCJhZG1p
+        bkFyZWExIjoiVVMiLCJhZG1pbkFyZWEzIjoiS1kiLCJ0eXBlIjoicyIsImRp
+        c3BsYXlMYXRMbmciOnsibG5nIjotODMuMTMxMjgxLCJsYXQiOjM3LjMzNTA5
+        Nn0sImxpbmtJZCI6MCwicG9zdGFsQ29kZSI6IiIsInNpZGVPZlN0cmVldCI6
+        Ik4iLCJkcmFnUG9pbnQiOmZhbHNlLCJhZG1pbkFyZWExVHlwZSI6IkNvdW50
+        cnkiLCJnZW9jb2RlUXVhbGl0eSI6IkNJVFkiLCJnZW9jb2RlUXVhbGl0eUNv
+        ZGUiOiJBNVhYWCIsImFkbWluQXJlYTNUeXBlIjoiU3RhdGUifV0sInByb3Zp
+        ZGVkTG9jYXRpb24iOnsibG9jYXRpb24iOiJEd2FyZiwgS1kifX0seyJsb2Nh
+        dGlvbnMiOlt7ImxhdExuZyI6eyJsbmciOi05NC42MTg3ODYsImxhdCI6NDMu
+        NjY3MTE0fSwiYWRtaW5BcmVhNCI6Ik1hcnRpbiBDb3VudHkiLCJhZG1pbkFy
+        ZWE1VHlwZSI6IkNpdHkiLCJhZG1pbkFyZWE0VHlwZSI6IkNvdW50eSIsImFk
+        bWluQXJlYTUiOiJXZWxjb21lIiwic3RyZWV0IjoiIiwiYWRtaW5BcmVhMSI6
+        IlVTIiwiYWRtaW5BcmVhMyI6Ik1OIiwidHlwZSI6InMiLCJkaXNwbGF5TGF0
+        TG5nIjp7ImxuZyI6LTk0LjYxODc4NiwibGF0Ijo0My42NjcxMTR9LCJsaW5r
+        SWQiOjAsInBvc3RhbENvZGUiOiIiLCJzaWRlT2ZTdHJlZXQiOiJOIiwiZHJh
+        Z1BvaW50IjpmYWxzZSwiYWRtaW5BcmVhMVR5cGUiOiJDb3VudHJ5IiwiZ2Vv
+        Y29kZVF1YWxpdHkiOiJDSVRZIiwiZ2VvY29kZVF1YWxpdHlDb2RlIjoiQTVY
+        WFgiLCJhZG1pbkFyZWEzVHlwZSI6IlN0YXRlIn1dLCJwcm92aWRlZExvY2F0
+        aW9uIjp7ImxvY2F0aW9uIjoiV2VsY29tZSwgTU4sIFVTIn19LHsibG9jYXRp
+        b25zIjpbXSwicHJvdmlkZWRMb2NhdGlvbiI6eyJsb2NhdGlvbiI6IkJhY2ts
+        YXNzLCBTY290bGFuZCJ9fV0sIm9wdGlvbnMiOnsiaWdub3JlTGF0TG5nSW5w
+        dXQiOmZhbHNlLCJtYXhSZXN1bHRzIjoxLCJ0aHVtYk1hcHMiOmZhbHNlfSwi
+        aW5mbyI6eyJjb3B5cmlnaHQiOnsidGV4dCI6IsKpIDIwMTMgTWFwUXVlc3Qs
+        IEluYy4iLCJpbWFnZVVybCI6Imh0dHA6Ly9hcGkubXFjZG4uY29tL3Jlcy9t
+        cWxvZ28uZ2lmIiwiaW1hZ2VBbHRUZXh0IjoiwqkgMjAxMyBNYXBRdWVzdCwg
+        SW5jLiJ9LCJzdGF0dXNjb2RlIjowLCJtZXNzYWdlcyI6W119fQ==
+    http_version: 
+  recorded_at: Thu, 28 Nov 2013 09:09:53 GMT
+recorded_with: VCR 2.8.0

@@ -1,0 +1,86 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://open.mapquestapi.com/geocoding/v1/batch?key=<MAPQUEST_API_KEY>&location=Welcome,%20MN,%20US&maxResults=1&thumbMaps=false
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: !binary |-
+        T0s=
+    headers:
+      !binary "U2VydmVy":
+      - !binary |-
+        QXBhY2hlLUNveW90ZS8xLjE=
+      !binary "QWNjZXNzLUNvbnRyb2wtQWxsb3ctT3JpZ2lu":
+      - !binary |-
+        Kg==
+      !binary "QWNjZXNzLUNvbnRyb2wtQWxsb3ctTWV0aG9kcw==":
+      - !binary |-
+        T1BUSU9OUyxHRVQsUE9TVA==
+      !binary "U2V0LUNvb2tpZQ==":
+      - !binary |-
+        SlNFU1NJT05JRD0xRDUwNjkyRjg2RjE4MTQyMjNCMDE4NTZENTEyRjIyRTsg
+        UGF0aD0vOyBIdHRwT25seQ==
+      !binary "RXhwaXJlcw==":
+      - !binary |-
+        TW9uLCAyMCBEZWMgMTk5OCAwMTowMDowMCBHTVQ=
+      !binary "TGFzdC1Nb2RpZmllZA==":
+      - !binary |-
+        RnJpLCAyOSBOb3YgMjAxMyAwMjo1MTo0OCBHTVQ=
+      !binary "Q2FjaGUtQ29udHJvbA==":
+      - !binary |-
+        bm8tY2FjaGUsIG11c3QtcmV2YWxpZGF0ZQ==
+      !binary "UHJhZ21h":
+      - !binary |-
+        bm8tY2FjaGU=
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbjtjaGFyc2V0PVVURi04
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MTIyNw==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        RnJpLCAyOSBOb3YgMjAxMyAwMjo1MTo0NyBHTVQ=
+      !binary "Q29ubmVjdGlvbg==":
+      - !binary |-
+        Y2xvc2U=
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJyZXN1bHRzIjpbeyJsb2NhdGlvbnMiOlt7ImxhdExuZyI6eyJsbmciOi04
+        My4xMzEyODEsImxhdCI6MzcuMzM1MDk2fSwiYWRtaW5BcmVhNCI6IlBlcnJ5
+        IiwiYWRtaW5BcmVhNVR5cGUiOiJDaXR5IiwiYWRtaW5BcmVhNFR5cGUiOiJD
+        b3VudHkiLCJhZG1pbkFyZWE1IjoiRHdhcmYiLCJzdHJlZXQiOiIiLCJhZG1p
+        bkFyZWExIjoiVVMiLCJhZG1pbkFyZWEzIjoiS1kiLCJ0eXBlIjoicyIsImRp
+        c3BsYXlMYXRMbmciOnsibG5nIjotODMuMTMxMjgxLCJsYXQiOjM3LjMzNTA5
+        Nn0sImxpbmtJZCI6MCwicG9zdGFsQ29kZSI6IiIsInNpZGVPZlN0cmVldCI6
+        Ik4iLCJkcmFnUG9pbnQiOmZhbHNlLCJhZG1pbkFyZWExVHlwZSI6IkNvdW50
+        cnkiLCJnZW9jb2RlUXVhbGl0eSI6IkNJVFkiLCJnZW9jb2RlUXVhbGl0eUNv
+        ZGUiOiJBNVhYWCIsImFkbWluQXJlYTNUeXBlIjoiU3RhdGUifV0sInByb3Zp
+        ZGVkTG9jYXRpb24iOnsibG9jYXRpb24iOiJEd2FyZiwgS1kifX0seyJsb2Nh
+        dGlvbnMiOlt7ImxhdExuZyI6eyJsbmciOi05NC42MTg3ODYsImxhdCI6NDMu
+        NjY3MTE0fSwiYWRtaW5BcmVhNCI6Ik1hcnRpbiBDb3VudHkiLCJhZG1pbkFy
+        ZWE1VHlwZSI6IkNpdHkiLCJhZG1pbkFyZWE0VHlwZSI6IkNvdW50eSIsImFk
+        bWluQXJlYTUiOiJXZWxjb21lIiwic3RyZWV0IjoiIiwiYWRtaW5BcmVhMSI6
+        IlVTIiwiYWRtaW5BcmVhMyI6Ik1OIiwidHlwZSI6InMiLCJkaXNwbGF5TGF0
+        TG5nIjp7ImxuZyI6LTk0LjYxODc4NiwibGF0Ijo0My42NjcxMTR9LCJsaW5r
+        SWQiOjAsInBvc3RhbENvZGUiOiIiLCJzaWRlT2ZTdHJlZXQiOiJOIiwiZHJh
+        Z1BvaW50IjpmYWxzZSwiYWRtaW5BcmVhMVR5cGUiOiJDb3VudHJ5IiwiZ2Vv
+        Y29kZVF1YWxpdHkiOiJDSVRZIiwiZ2VvY29kZVF1YWxpdHlDb2RlIjoiQTVY
+        WFgiLCJhZG1pbkFyZWEzVHlwZSI6IlN0YXRlIn1dLCJwcm92aWRlZExvY2F0
+        aW9uIjp7ImxvY2F0aW9uIjoiV2VsY29tZSwgTU4sIFVTIn19XSwib3B0aW9u
+        cyI6eyJpZ25vcmVMYXRMbmdJbnB1dCI6ZmFsc2UsIm1heFJlc3VsdHMiOjEs
+        InRodW1iTWFwcyI6ZmFsc2V9LCJpbmZvIjp7ImNvcHlyaWdodCI6eyJ0ZXh0
+        IjoiwqkgMjAxMyBNYXBRdWVzdCwgSW5jLiIsImltYWdlVXJsIjoiaHR0cDov
+        L2FwaS5tcWNkbi5jb20vcmVzL21xbG9nby5naWYiLCJpbWFnZUFsdFRleHQi
+        OiLCqSAyMDEzIE1hcFF1ZXN0LCBJbmMuIn0sInN0YXR1c2NvZGUiOjAsIm1l
+        c3NhZ2VzIjpbXX19
+    http_version: 
+  recorded_at: Fri, 29 Nov 2013 02:51:48 GMT
+recorded_with: VCR 2.8.0

@@ -3,6 +3,7 @@ PADRINO_ENV = 'test' unless defined?(PADRINO_ENV)
 require 'simplecov'
 require 'coveralls'
 require 'vcr'
+require 'webmock/rspec'
 
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
     SimpleCov::Formatter::HTMLFormatter,
