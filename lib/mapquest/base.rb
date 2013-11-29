@@ -7,7 +7,7 @@ module Mapquest
   include HTTParty
 
   #Override default query normalizer to allow sort order to be maintained
-  query_string_normalizer QueryNormalizer::UNSORTED_NORMALIZER
+  disable_rails_query_string_format
   base_uri 'open.mapquestapi.com/geocoding/v1'
 
   def default_query
@@ -73,15 +73,16 @@ module Mapquest
       return results
     end
 
-    #iterate over input and output addresses
-    address_list.zip(response['results']).each do |input, output|
-      next if output['locations'].empty?
+    #iterate over output addresses
+    response['results'].each do |result|
+      next if result['locations'].empty?
 
-      # retrieve usernames associated with unique input address
+      input = result['providedLocation']['location']
+
       usernames = query[input]
 
       #create a location result instance
-      location = Result.new output['locations'].first
+      location = Result.new result['locations'].first
 
       #return result for username
       usernames.each { |u| results[u] = location }

@@ -32,7 +32,7 @@ describe Mapquest do
     }
     examples.each do |input, expected|
       it %Q(filters "#{input}" to "#{expected}") do
-        expect(Mapquest.format_search(input)).to eql(expected)
+        expect(Mapquest.format_search(input)).to eq(expected)
       end
     end
   end
@@ -79,19 +79,19 @@ describe Mapquest do
         end
 
         it 'returns a single location result' do
-          expect(result['results'].count).to be(1)
+          expect(result['results'].count).to eql(1)
         end
 
         it 'returns a single geocoded address' do
-          expect(location_results.count).to be(1)
+          expect(location_results.count).to eql(1)
         end
 
         it 'returns a city-level address' do
-          expect(location_results.first['geocodeQuality']).to eql('CITY')
+          expect(location_results.first['geocodeQuality']).to eq('CITY')
         end
 
         it 'returns the correct city for the input' do
-          expect(location_results.first['adminArea5']).to eql('Dwarf')
+          expect(location_results.first['adminArea5']).to eq('Dwarf')
         end
 
         it 'returns the provided location' do
@@ -113,11 +113,11 @@ describe Mapquest do
         end
 
         it 'returns multiple location results' do
-          expect(result['results'].count).to be(3)
+          expect(result['results'].count).to eql(3)
         end
 
-        it 'returns results ordered by input addresses' do
-          expect(provided_location_result).to eq(location)
+        it 'returns results for each address' do
+          expect(provided_location_result).to match_array(location)
         end
       end
     end
@@ -261,7 +261,7 @@ describe Mapquest do
       end
 
       it 'provides city level address' do
-        expect(result[:user1].formatted).to eql('London, London, England, GB')
+        expect(result[:user1].formatted).to eq('London, London, England, GB')
       end
     end
 
@@ -284,7 +284,7 @@ describe Mapquest do
       end
 
       it 'provides city level addresses' do
-        expect(result[:user1].formatted).to eql('City of Westminster, London, England, GB')
+        expect(result[:user1].formatted).to eq('City of Westminster, London, England, GB')
       end
     end
   end
