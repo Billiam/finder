@@ -50,7 +50,7 @@ module Mapquest
     results = Hash[locations.keys.zip()]
 
     # safe hash inversion
-    # hash of unique location => [username....]
+    # hash of unique location => [username1. username2, ...]
     query = locations.each_with_object({}) do |(key, value), query|
       next if value.nil?
 
@@ -66,9 +66,9 @@ module Mapquest
     address_list = query.keys
 
     #send query
-    response = get('/batch', query: default_query.merge( location: address_list ))
+    response =  lookup address_list
 
-    unless response.success?
+    unless response && response.success?
       loggy.warn "Could not geocode addresses: #{response.code}"
       return results
     end
@@ -80,7 +80,7 @@ module Mapquest
       # retrieve usernames associated with unique input address
       usernames = query[input]
 
-      #create a location result instances
+      #create a location result instance
       location = Result.new output['locations'].first
 
       #return result for username
@@ -88,5 +88,11 @@ module Mapquest
     end
 
     results
+  end
+
+  def lookup(address_list)
+    return false unless address_list.present?
+
+    get('/batch', query: default_query.merge( location: address_list ))
   end
 end
