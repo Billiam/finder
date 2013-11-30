@@ -6,7 +6,7 @@ module Logging
   def self.loggy
     @logger ||= begin
       logger = ::Logger.new STDOUT
-      logger.level = ::Logger.const_get(ENV['LOG_LEVEL'].to_sym)
+      logger.level = ::Logger.const_get(Configuration::LOG_LEVEL.to_sym)
       logger.formatter = nil
       logger
     end

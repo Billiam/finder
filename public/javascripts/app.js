@@ -53,11 +53,11 @@ define(function(require) {
         if ( ! config) {
             return false;
         }
-        var controller = config['controller'];
-        var action = config['action'];
+        var controllerName = config.controller;
+        var action = config.action;
 
-        if(typeof controller == 'string' && controllers[controller]) {
-            (new controllers[controller]).init(action);
+        if(typeof controllerName === 'string' && controllers[controllerName]) {
+            (new controllers[controllerName]()).init(action);
         }
     };
 

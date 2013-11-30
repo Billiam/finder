@@ -1,1 +1,1 @@
---color --tty
+--color --tty -fd --order rand

@@ -1,5 +1,5 @@
 module Mapquest
-  module Overrider
+  module Override
     module Locations
       COUNTRIES = {
         'Australia' => 'AU',

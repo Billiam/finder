@@ -1,0 +1,60 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://open.mapquestapi.com/geocoding/v1/batch?key=<MAPQUEST_API_KEY>&location=Dwarf,%20KY&maxResults=1&thumbMaps=false
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: !binary |-
+        T0s=
+    headers:
+      !binary "U2VydmVy":
+      - !binary |-
+        QXBhY2hlLUNveW90ZS8xLjE=
+      !binary "U2V0LUNvb2tpZQ==":
+      - !binary |-
+        SlNFU1NJT05JRD0xNURENjcwQjQzN0M1ODIyREY1RTUwN0I4REZBOEVCQzsg
+        UGF0aD0vOyBIdHRwT25seQ==
+      !binary "RXhwaXJlcw==":
+      - !binary |-
+        TW9uLCAyMCBEZWMgMTk5OCAwMTowMDowMCBHTVQ=
+      !binary "TGFzdC1Nb2RpZmllZA==":
+      - !binary |-
+        V2VkLCAyNyBOb3YgMjAxMyAwNzoyMzo0NCBHTVQ=
+      !binary "Q2FjaGUtQ29udHJvbA==":
+      - !binary |-
+        bm8tY2FjaGUsIG11c3QtcmV2YWxpZGF0ZQ==
+      !binary "UHJhZ21h":
+      - !binary |-
+        bm8tY2FjaGU=
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbjtjaGFyc2V0PVVURi04
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        NDc2
+      !binary "RGF0ZQ==":
+      - !binary |-
+        V2VkLCAyNyBOb3YgMjAxMyAwNzoyMzo0MyBHTVQ=
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJyZXN1bHRzIjpbeyJsb2NhdGlvbnMiOltdLCJwcm92aWRlZExvY2F0aW9u
+        Ijp7fX1dLCJvcHRpb25zIjp7Imlnbm9yZUxhdExuZ0lucHV0IjpmYWxzZSwi
+        bWF4UmVzdWx0cyI6LTEsInRodW1iTWFwcyI6dHJ1ZX0sImluZm8iOnsiY29w
+        eXJpZ2h0Ijp7InRleHQiOiLCqSAyMDEzIE1hcFF1ZXN0LCBJbmMuIiwiaW1h
+        Z2VVcmwiOiJodHRwOi8vYXBpLm1xY2RuLmNvbS9yZXMvbXFsb2dvLmdpZiIs
+        ImltYWdlQWx0VGV4dCI6IsKpIDIwMTMgTWFwUXVlc3QsIEluYy4ifSwic3Rh
+        dHVzY29kZSI6NDAzLCJtZXNzYWdlcyI6WyJUaGlzIGlzIG5vdCBhIHZhbGlk
+        IGtleS4gUGxlYXNlIGNoZWNrIHRoYXQgeW91IGhhdmUgZW50ZXJlZCB0aGlz
+        IGNvcnJlY3RseS4gSWYgeW91IGRvIG5vdCBoYXZlIGEga2V5LCB5b3UgY2Fu
+        IG9idGFpbiBhIGZyZWUga2V5IGJ5IHJlZ2lzdGVyaW5nIGF0IGh0dHA6Ly9k
+        ZXZlbG9wZXIubWFwcXVlc3QuY29tLiJdfX0=
+    http_version: 
+  recorded_at: Wed, 27 Nov 2013 07:23:44 GMT
+recorded_with: VCR 2.8.0

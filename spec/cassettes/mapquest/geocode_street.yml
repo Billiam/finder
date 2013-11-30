@@ -1,0 +1,143 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://open.mapquestapi.com/geocoding/v1/batch?key=<MAPQUEST_API_KEY>&location=221%20B%20Baker%20Street,%20London,%20England&maxResults=1&thumbMaps=false
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: !binary |-
+        T0s=
+    headers:
+      !binary "U2VydmVy":
+      - !binary |-
+        QXBhY2hlLUNveW90ZS8xLjE=
+      !binary "QWNjZXNzLUNvbnRyb2wtQWxsb3ctT3JpZ2lu":
+      - !binary |-
+        Kg==
+      !binary "QWNjZXNzLUNvbnRyb2wtQWxsb3ctTWV0aG9kcw==":
+      - !binary |-
+        T1BUSU9OUyxHRVQsUE9TVA==
+      !binary "U2V0LUNvb2tpZQ==":
+      - !binary |-
+        SlNFU1NJT05JRD1DRjE3OTdCQTg1QkFBNzA3NDI1NzczMzE5NkZCMTQ4RDsg
+        UGF0aD0vOyBIdHRwT25seQ==
+      !binary "RXhwaXJlcw==":
+      - !binary |-
+        TW9uLCAyMCBEZWMgMTk5OCAwMTowMDowMCBHTVQ=
+      !binary "TGFzdC1Nb2RpZmllZA==":
+      - !binary |-
+        RnJpLCAyOSBOb3YgMjAxMyAyMjowNTozMCBHTVQ=
+      !binary "Q2FjaGUtQ29udHJvbA==":
+      - !binary |-
+        bm8tY2FjaGUsIG11c3QtcmV2YWxpZGF0ZQ==
+      !binary "UHJhZ21h":
+      - !binary |-
+        bm8tY2FjaGU=
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbjtjaGFyc2V0PVVURi04
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        Nzk3
+      !binary "RGF0ZQ==":
+      - !binary |-
+        RnJpLCAyOSBOb3YgMjAxMyAyMjowNTozMCBHTVQ=
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJyZXN1bHRzIjpbeyJsb2NhdGlvbnMiOlt7ImxhdExuZyI6eyJsbmciOi0w
+        LjE1ODM1NiwibGF0Ijo1MS41MjM5Nn0sImFkbWluQXJlYTQiOiJMb25kb24i
+        LCJhZG1pbkFyZWE1VHlwZSI6IkNpdHkiLCJhZG1pbkFyZWE0VHlwZSI6IkNv
+        dW50eSIsImFkbWluQXJlYTUiOiJDaXR5IG9mIFdlc3RtaW5zdGVyIiwic3Ry
+        ZWV0IjoiQmFrZXIgU3RyZWV0IiwiYWRtaW5BcmVhMSI6IkdCIiwiYWRtaW5B
+        cmVhMyI6IkVuZ2xhbmQiLCJ0eXBlIjoicyIsImRpc3BsYXlMYXRMbmciOnsi
+        bG5nIjotMC4xNTgzNTYsImxhdCI6NTEuNTIzOTZ9LCJsaW5rSWQiOjAsInBv
+        c3RhbENvZGUiOiJOVzEgNkFYIiwic2lkZU9mU3RyZWV0IjoiTiIsImRyYWdQ
+        b2ludCI6ZmFsc2UsImFkbWluQXJlYTFUeXBlIjoiQ291bnRyeSIsImdlb2Nv
+        ZGVRdWFsaXR5IjoiU1RSRUVUIiwiZ2VvY29kZVF1YWxpdHlDb2RlIjoiQjJY
+        WFgiLCJhZG1pbkFyZWEzVHlwZSI6IlN0YXRlIn1dLCJwcm92aWRlZExvY2F0
+        aW9uIjp7ImxvY2F0aW9uIjoiMjIxIEIgQmFrZXIgU3RyZWV0LCBMb25kb24s
+        IEVuZ2xhbmQifX1dLCJvcHRpb25zIjp7Imlnbm9yZUxhdExuZ0lucHV0Ijpm
+        YWxzZSwibWF4UmVzdWx0cyI6MSwidGh1bWJNYXBzIjpmYWxzZX0sImluZm8i
+        OnsiY29weXJpZ2h0Ijp7InRleHQiOiLCqSAyMDEzIE1hcFF1ZXN0LCBJbmMu
+        IiwiaW1hZ2VVcmwiOiJodHRwOi8vYXBpLm1xY2RuLmNvbS9yZXMvbXFsb2dv
+        LmdpZiIsImltYWdlQWx0VGV4dCI6IsKpIDIwMTMgTWFwUXVlc3QsIEluYy4i
+        fSwic3RhdHVzY29kZSI6MCwibWVzc2FnZXMiOltdfX0=
+    http_version: 
+  recorded_at: Fri, 29 Nov 2013 22:05:45 GMT
+- request:
+    method: get
+    uri: http://open.mapquestapi.com/geocoding/v1/batch?key=<MAPQUEST_API_KEY>&location=City%20of%20Westminster,%20London,%20England,%20GB&maxResults=1&thumbMaps=false
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: !binary |-
+        T0s=
+    headers:
+      !binary "U2VydmVy":
+      - !binary |-
+        QXBhY2hlLUNveW90ZS8xLjE=
+      !binary "QWNjZXNzLUNvbnRyb2wtQWxsb3ctT3JpZ2lu":
+      - !binary |-
+        Kg==
+      !binary "QWNjZXNzLUNvbnRyb2wtQWxsb3ctTWV0aG9kcw==":
+      - !binary |-
+        T1BUSU9OUyxHRVQsUE9TVA==
+      !binary "U2V0LUNvb2tpZQ==":
+      - !binary |-
+        SlNFU1NJT05JRD1GMUEzNjU5RkZGMEVDQjhBMUZGRjlCNUY2RDlDOEJFRDsg
+        UGF0aD0vOyBIdHRwT25seQ==
+      !binary "RXhwaXJlcw==":
+      - !binary |-
+        TW9uLCAyMCBEZWMgMTk5OCAwMTowMDowMCBHTVQ=
+      !binary "TGFzdC1Nb2RpZmllZA==":
+      - !binary |-
+        RnJpLCAyOSBOb3YgMjAxMyAyMjowNTozNyBHTVQ=
+      !binary "Q2FjaGUtQ29udHJvbA==":
+      - !binary |-
+        bm8tY2FjaGUsIG11c3QtcmV2YWxpZGF0ZQ==
+      !binary "UHJhZ21h":
+      - !binary |-
+        bm8tY2FjaGU=
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbjtjaGFyc2V0PVVURi04
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        Nzgz
+      !binary "RGF0ZQ==":
+      - !binary |-
+        RnJpLCAyOSBOb3YgMjAxMyAyMjowNTozNiBHTVQ=
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJyZXN1bHRzIjpbeyJsb2NhdGlvbnMiOlt7ImxhdExuZyI6eyJsbmciOi0w
+        LjE1MjI1OSwibGF0Ijo1MS41MTE4MDV9LCJhZG1pbkFyZWE0IjoiTG9uZG9u
+        IiwiYWRtaW5BcmVhNVR5cGUiOiJDaXR5IiwiYWRtaW5BcmVhNFR5cGUiOiJD
+        b3VudHkiLCJhZG1pbkFyZWE1IjoiQ2l0eSBvZiBXZXN0bWluc3RlciIsInN0
+        cmVldCI6IiIsImFkbWluQXJlYTEiOiJHQiIsImFkbWluQXJlYTMiOiJFbmds
+        YW5kIiwidHlwZSI6InMiLCJkaXNwbGF5TGF0TG5nIjp7ImxuZyI6LTAuMTUy
+        MjU5LCJsYXQiOjUxLjUxMTgwNX0sImxpbmtJZCI6MCwicG9zdGFsQ29kZSI6
+        IiIsInNpZGVPZlN0cmVldCI6Ik4iLCJkcmFnUG9pbnQiOmZhbHNlLCJhZG1p
+        bkFyZWExVHlwZSI6IkNvdW50cnkiLCJnZW9jb2RlUXVhbGl0eSI6IkNJVFki
+        LCJnZW9jb2RlUXVhbGl0eUNvZGUiOiJBNVhYWCIsImFkbWluQXJlYTNUeXBl
+        IjoiU3RhdGUifV0sInByb3ZpZGVkTG9jYXRpb24iOnsibG9jYXRpb24iOiJD
+        aXR5IG9mIFdlc3RtaW5zdGVyLCBMb25kb24sIEVuZ2xhbmQsIEdCIn19XSwi
+        b3B0aW9ucyI6eyJpZ25vcmVMYXRMbmdJbnB1dCI6ZmFsc2UsIm1heFJlc3Vs
+        dHMiOjEsInRodW1iTWFwcyI6ZmFsc2V9LCJpbmZvIjp7ImNvcHlyaWdodCI6
+        eyJ0ZXh0IjoiwqkgMjAxMyBNYXBRdWVzdCwgSW5jLiIsImltYWdlVXJsIjoi
+        aHR0cDovL2FwaS5tcWNkbi5jb20vcmVzL21xbG9nby5naWYiLCJpbWFnZUFs
+        dFRleHQiOiLCqSAyMDEzIE1hcFF1ZXN0LCBJbmMuIn0sInN0YXR1c2NvZGUi
+        OjAsIm1lc3NhZ2VzIjpbXX19
+    http_version: 
+  recorded_at: Fri, 29 Nov 2013 22:05:51 GMT
+recorded_with: VCR 2.8.0

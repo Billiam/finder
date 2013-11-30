@@ -32,11 +32,10 @@ class PollBotJob
   def run
     bot = GongBot::Base.new
 
-    bot.run do |action, results|
-      if [:remove, :gong, :register].include?(action)
-        self.class.public_send action, results
-      end
-    end
+    results = bot.run
+
+    results.removal.each { |user| self.class.remove(user) }
+    results.registration.each { |user| self.class.register(user) }
   end
 
   add_transaction_tracer :run, :category => :task

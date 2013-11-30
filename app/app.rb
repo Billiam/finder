@@ -7,7 +7,7 @@ module AlFinder
 
     register Padrino::Cache
     enable :sessions
-    enable :caching if ENV['CACHE'] == 'true'
+    enable :caching if Configuration::CACHE
 
     set :cache, Padrino::Cache::Store::Moped.new(
       capped: false,
