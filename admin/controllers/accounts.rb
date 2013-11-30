@@ -25,8 +25,10 @@ AlFinder::Admin.controllers :accounts do
   end
 
   get :edit, :with => :id do
-    @title = pat(:edit_title, :model => "account #{params[:id]}")
     @account = Account.find(params[:id])
+    not_found unless current_account.admin? || current_account == @account
+
+    @title = pat(:edit_title, :model => "account #{params[:id]}")
     if @account
       render 'accounts/edit'
     else
@@ -36,8 +38,10 @@ AlFinder::Admin.controllers :accounts do
   end
 
   put :update, :with => :id do
-    @title = pat(:update_title, :model => "account #{params[:id]}")
     @account = Account.find(params[:id])
+    not_found unless current_account.admin? || current_account == @account
+
+    @title = pat(:update_title, :model => "account #{params[:id]}")
     if @account
       if @account.update_attributes(params[:account])
         flash[:success] = pat(:update_success, :model => 'Account', :id =>  "#{params[:id]}")
