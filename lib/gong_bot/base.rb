@@ -77,6 +77,14 @@ module GongBot
       self.class.partition_messages messages
     end
 
+    def read messages
+      return unless messages.present?
+
+      loggy.debug "Marking #{messages.count} as read"
+
+      client.mark_read messages.map{ |m| m['data']['name'] }.join(',')
+    end
+
     def fetch_messages
       loggy.info 'Fetching info messages'
 
@@ -86,7 +94,9 @@ module GongBot
       })
 
       if messages.success?
-        return self.class.filter_pms messages['data']['children']
+        filtered_messages = self.class.filter_pms messages['data']['children']
+        self.read filtered_messages
+        return filtered_messages
       else
         loggy.warn "Unable to fetch messages, received #{messages.code}"
       end
