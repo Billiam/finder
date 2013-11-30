@@ -45,6 +45,10 @@ class Account
     ::BCrypt::Password.new(crypted_password) == password
   end
 
+  def admin?
+    self.role == "admin"
+  end
+
   private
     def encrypt_password
       self.crypted_password = ::BCrypt::Password.create(self.password)

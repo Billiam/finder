@@ -19,6 +19,8 @@ module AlFinder
     end
 
     access_control.roles_for :moderator do |role|
+      role.allow "/accounts/edit"
+      role.allow "/accounts/update"
       role.project_module :points, '/points'
     end
 
