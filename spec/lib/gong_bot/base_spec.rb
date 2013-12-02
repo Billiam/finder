@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe GongBot::Base do
-  let (:pm) { {'data' => {'author' => 'user', 'body' => 'content', 'created_utc' => 1385683200}} }
-  let (:comment) { {'data' => {'author' => 'user', 'body' => 'content', 'created_utc' => 1385683200, 'was_comment' => true}} }
+  let (:pm) { {'data' => {'name' => 'id_1234', 'author' => 'user', 'body' => 'content', 'created_utc' => 1385683200}} }
+  let (:comment) { {'data' => {'name' => 'id_5678', 'author' => 'user', 'body' => 'content', 'created_utc' => 1385683200, 'was_comment' => true}} }
   let (:formatted_pm) do
     {
       author: 'user',
@@ -114,7 +114,6 @@ describe GongBot::Base do
         [ pm ]
       end
 
-
       context "when fetching messages" do
         it "logs fetch messages" do
           expect(log).to receive(:info).with('Fetching info messages')
@@ -126,7 +125,7 @@ describe GongBot::Base do
           bot.fetch_messages
         end
 
-        it "marks messages as read" do
+        it "marks inbox as read" do
           expect(client).to receive(:get_messages).with('unread', hash_including(mark: true))
           bot.fetch_messages
         end
@@ -147,6 +146,11 @@ describe GongBot::Base do
 
         it "returns inbox messages" do
           expect(bot.fetch_messages).to eq(inbox_messages)
+        end
+
+        it "marks messages as read" do
+          expect(client).to receive(:mark_read).with('id_1234')
+          bot.fetch_messages
         end
 
         it "does not trigger warnings" do
@@ -174,6 +178,20 @@ describe GongBot::Base do
         it "returns empty messages" do
           expect(bot.fetch_messages).to eql([])
         end
+      end
+    end
+
+    describe '#read' do
+      let(:messages) do
+        [
+          {'data' => {'name' => 'id_abcd'}},
+          {'data' => {'name' => 'id_efgh'}},
+        ]
+      end
+
+      it 'marks client messages as read' do
+        expect(client).to receive(:mark_read).with('id_abcd,id_efgh')
+        bot.read messages
       end
     end
 
