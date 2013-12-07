@@ -135,27 +135,8 @@ describe Point, type: :model do
   end
 
   describe ".csv_columns" do
-    let(:csv_columns) { [:name, :latitude, :longitude, :city, :county, :state, :country] }
+    let(:csv_columns) { [:latitude, :longitude, :city, :county, :state, :country, :names] }
     specify { expect(Point.csv_columns).to eql(csv_columns) }
-  end
-
-  describe ".to_csv" do
-    let!(:approved) do
-      create :point,
-         status: 'approved',
-         name: 'csv_test',
-         location: [1.0, -1.0],
-         city: 'city',
-         state: 'state',
-         county: 'county',
-         country: 'country'
-    end
-    it "converts points to CSV" do
-      expect(Point.to_csv).to eql <<-CSV
-name,latitude,longitude,city,county,state,country
-csv_test,-1.0,1.0,city,county,state,country
-      CSV
-    end
   end
 
   describe "#active?" do
@@ -225,41 +206,6 @@ csv_test,-1.0,1.0,city,county,state,country
       expect("#{point}").to eql(point.location_name)
     end
   end
-
-  describe "#as_csv" do
-    let(:point) { build_stubbed(:point) }
-    it "matches #export_attributes" do
-      expect(point.as_csv).to eql(point.export_attributes)
-    end
-  end
-
-  describe "#export_attributes" do
-    let(:point) do
-      build_stubbed :point,
-             status: 'approved',
-             name: 'csv_test',
-             location: [1.0, -1.0],
-             city: 'city',
-             state: 'state',
-             county: 'county',
-             country: 'country'
-    end
-
-    it "exports csv row hash" do
-      expect(point.export_attributes).to eql({
-          name: 'csv_test',
-          city: 'city',
-          county: 'county',
-          state: 'state',
-          country: 'country',
-          latitude: -1.0,
-          longitude: 1.0
-      })
-    end
-  end
-
-  pending describe ".cluster"
-
 
   describe 'before_validation' do
     it 'runs callbacks' do

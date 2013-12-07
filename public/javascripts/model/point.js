@@ -8,9 +8,10 @@ define(function(require) {
     /**
      * Thin wrapper around parsed CSV data
      *
+     * @class Point
+     * @constructor
      * @param {Object} row
      * @returns {Object}
-     * @constructor
      */
     var Point = function(data) {
         this._row = data;
@@ -20,6 +21,7 @@ define(function(require) {
     /**
      * Get values from delegated row
      *
+     * @method get
      * @param {String} key
      * @returns {*}
      */
@@ -30,6 +32,7 @@ define(function(require) {
     /**
      * Fetch the row location as a string
      *
+     * @method location
      * @returns {String}
      */
     Point.prototype.location = function() {
@@ -48,6 +51,7 @@ define(function(require) {
     /**
      * Fetch the row data as an array
      *
+     * @method toTable
      * @returns {Array}
      */
     Point.prototype.toTable = function() {
@@ -63,6 +67,8 @@ define(function(require) {
     /**
      * Parse CSV string to individual point instances
      *
+     * @method parseData
+     * @private
      * @param {String} csv
      * @returns {Array}
      */
@@ -70,14 +76,38 @@ define(function(require) {
         var points = [];
         var parsed = CsvParser.toObjects(csv);
         for (var i = 0, l = parsed.length; i<l; i++) {
-            points.push(new Point(parsed[i]));
+            var location = parsed[i];
+            var names = location.names.split(',');
+            for (var j = 0, k = names.length; j < k; j++) {
+                var point = clone(location);
+                point.name = names[j];
+                points.push(new Point(point));
+            }
         }
         return points;
     };
 
     /**
+     * Shallow object clone
+     *
+     * @method clone
+     * @private
+     * @param {*} obj
+     * @returns {*}
+     */
+    var clone = function(obj) {
+        if (null == obj || "object" != typeof obj) return obj;
+        var copy = obj.constructor();
+        for (var attr in obj) {
+            if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+        }
+        return copy;
+    };
+
+    /**
      * Fetch and memoize all points
      *
+     * @method all
      * @returns {Deferred.promise}
      */
     Point.all = function() {
