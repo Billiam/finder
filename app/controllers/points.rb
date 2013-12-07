@@ -7,7 +7,7 @@ AlFinder::App.controllers :points do
     @title = ''
     case content_type
       when :csv then
-         Point.enabled.order_by(created_at: :desc).to_csv
+        Point.location_csv
       else
         render 'points/index'
     end

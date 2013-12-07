@@ -67,45 +67,57 @@ class Point
     unmoderated.update_all status: 'approved'
   end
 
-  def self.cluster(zoom=nil)
+  def self.location_csv
+    require 'csv'
 
+    group_points = enabled.order_by(created_at: :desc).group_by_location
+
+    CSV.generate do |csv|
+      column_names = csv_columns.map(&:to_s)
+      csv << csv_columns
+
+      group_points.each do |i|
+        row = i.values_at(*column_names)
+        csv << row
+      end
+    end
+  end
+
+  def self.group_by_location
     map = %q(
       function() {
-        var lat = this.location[1];
-        var lng = this.location[0];
-        emit([lat, lng].toString(), { names: [this.name], lat: lat, lng: lng });
+        var key =  {
+          latitude: this.location[1],
+          longitude: this.location[0],
+          city: this.city,
+          county: this.county,
+          state: this.state,
+          country: this.country
+        };
+        emit(key, { names: [this.name] });
       }
     )
 
     reduce = %q(
       function(key, values) {
-        var result = { names: [], lat: 0, lng: 0 };
+        var result = { names: [] };
         values.forEach(function(value) {
           result.names = result.names.concat(value.names);
-          result.lat = value.lat;
-          result.lng = value.lng;
         });
 
         return result;
       }
     )
-    map_reduce(map, reduce).out(inline: true).map { |i| i['value'] }
+
+    map_reduce(map, reduce).out(inline: true).map do |point|
+      item = point['_id'].merge point['value']
+      item['names'] = item['names'].join(',')
+      item
+    end
   end
 
   def self.csv_columns
-    [:name, :latitude, :longitude, :city, :county, :state, :country]
-  end
-
-  def self.to_csv
-    require 'csv'
-
-    CSV.generate do |csv|
-      csv << csv_columns
-
-      each do |i|
-        csv << i.as_csv.values
-      end
-    end
+    [:latitude, :longitude, :city, :county, :state, :country, :names]
   end
 
   def active?
@@ -122,22 +134,6 @@ class Point
 
   def to_s
     location_name
-  end
-
-  def as_csv
-    export_attributes
-  end
-
-  def export_attributes
-    {
-      name: name,
-      latitude: location.y,
-      longitude: location.x,
-      city: city,
-      county: county,
-      state: state,
-      country: country,
-    }
   end
 
   def set_case_insensitive

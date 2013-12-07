@@ -10,7 +10,8 @@ module MongoidBatch
 
       def bulk_upsert!(rows)
         update, insert = rows.partition(&:persisted?)
-        insert.each { |i| i.created_at ||= Time.now if i.respond_to?(:created_at=) }
+        # Run before save and create callbacks for insertable records
+        insert.each { |i| i.run_before_callbacks(:save, :create) }
         collection.insert(insert.map(&:as_document)) unless insert.empty?
         update.each(&:save)
 
