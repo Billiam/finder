@@ -77,6 +77,7 @@ class Point
       csv << csv_columns
 
       group_points.each do |i|
+        i['names'] = i['names'].join(',')
         row = i.values_at(*column_names)
         csv << row
       end
@@ -111,7 +112,6 @@ class Point
 
     map_reduce(map, reduce).out(inline: true).map do |point|
       item = point['_id'].merge point['value']
-      item['names'] = item['names'].join(',')
       item
     end
   end

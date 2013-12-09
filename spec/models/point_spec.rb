@@ -70,6 +70,63 @@ describe Point, type: :model do
     end
   end
 
+  describe '.location_csv' do
+    let(:location) do
+      {
+        status: 'approved',
+        location: [0, 0],
+        city: 'Dwarf',
+        county: 'Perry County',
+        state: 'KY',
+        country: 'US'
+      }
+    end
+
+    let!(:points) do
+      [
+          create(:point, location.merge(name: 'foo')),
+          create(:point, location.merge(name: 'bar')),
+      ]
+    end
+
+    it 'formats points as csv' do
+      expect(Point.location_csv).to eq <<-CSV
+latitude,longitude,city,county,state,country,names
+0.0,0.0,Dwarf,Perry County,KY,US,"bar,foo"
+      CSV
+    end
+  end
+
+  describe ".group_by_location" do
+    let!(:points) do
+      [
+        create(:point, name: 'foo', location: [0,0]),
+        create(:point, name: 'bar', location: [0,0]),
+        create(:point, name: 'baz', location: [10,10]),
+      ]
+    end
+
+    let(:result) do
+      Point.group_by_location
+    end
+
+    let(:multi_user_location) do
+      result.select { |i| i['latitude'] == 0 && i['longitude'] == 0 }.first
+    end
+
+    it "returns results for unique locations" do
+      expect(result.count).to eql(2)
+    end
+
+    it "groups results by location" do
+      expect(result.first)
+    end
+
+    it "returns multiple names for shared locations" do
+      expect(multi_user_location['names']).to match_array(['foo', 'bar'])
+    end
+  end
+
   describe '.valid_filter?' do
     statuses.values.each do |status|
       it "#{status} is true" do
@@ -85,6 +142,7 @@ describe Point, type: :model do
     it "is a valid symbol for found filters" do
       expect(Point.get_filter 'disabled').to eql(:disabled)
     end
+
     it "is enabled for unrecognized filters" do
       expect(Point.get_filter 'missing').to eql(:enabled)
     end
