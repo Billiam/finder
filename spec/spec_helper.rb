@@ -24,6 +24,11 @@ RSpec.configure do |conf|
   conf.include FactoryGirl::Syntax::Methods
   conf.extend VCR::RSpec::Macros
 
+  # Create indices for each model
+  conf.before(:suite) do
+    Mongoid.models.each(&:create_indexes)
+  end
+
   # Clean/Reset Mongoid DB prior to running each test.
   conf.before(:each) do
     Mongoid::Sessions.default.collections.select {|c| c.name !~ /system/}.each {|c| c.find.remove_all}
