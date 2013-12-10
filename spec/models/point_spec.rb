@@ -192,9 +192,9 @@ latitude,longitude,city,county,state,country,names
     end
   end
 
-  describe ".csv_columns" do
-    let(:csv_columns) { [:latitude, :longitude, :city, :county, :state, :country, :names] }
-    specify { expect(Point.csv_columns).to eql(csv_columns) }
+  describe ".column_names" do
+    let(:csv_columns) { ['latitude', 'longitude', 'city', 'county', 'state', 'country', 'names'] }
+    specify { expect(Point.column_names).to eq(csv_columns) }
   end
 
   describe "#active?" do
