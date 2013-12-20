@@ -68,8 +68,8 @@ module Mapquest
     #send query
     response =  lookup address_list
 
-    unless response && response.success?
-      loggy.warn "Could not geocode addresses: #{response.code}"
+    if ! response || ! response.success?
+      loggy.warn "Could not geocode addresses: #{response.code}" if response.respond_to? :code
       return results
     end
 
