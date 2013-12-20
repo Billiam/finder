@@ -70,16 +70,14 @@ class Point
   def self.location_csv
     require 'csv'
 
-    group_points = enabled.order_by(created_at: :desc).group_by_location
+    group_points = enabled.group_by_location
 
     CSV.generate do |csv|
-      column_names = csv_columns.map(&:to_s)
-      csv << csv_columns
+      csv << column_names
 
-      group_points.each do |i|
-        i['names'] = i['names'].join(',')
-        row = i.values_at(*column_names)
-        csv << row
+      group_points.each do |row|
+        row['names'] = row['names'].join(',')
+        csv << row.values_at(*column_names)
       end
     end
   end
@@ -111,13 +109,12 @@ class Point
     )
 
     map_reduce(map, reduce).out(inline: true).map do |point|
-      item = point['_id'].merge point['value']
-      item
+      point['_id'].merge point['value']
     end
   end
 
-  def self.csv_columns
-    [:latitude, :longitude, :city, :county, :state, :country, :names]
+  def self.column_names
+    %w(latitude longitude city county state country names)
   end
 
   def active?
