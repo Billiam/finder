@@ -7,7 +7,7 @@ vendor/gems/*
 .sass-cache/*
 db/*.db
 .*.sw*
-config/environment.rb
+.env
 public/build/*
 !public/build/.gitkeep
 coverage

@@ -8,8 +8,12 @@ require 'bundler/setup'
 
 Bundler.require(:default, PADRINO_ENV)
 
-app_env = Padrino.root('config/environment.rb')
-load(app_env) if File.exists?(app_env)
+
+app_env = Padrino.root('.env')
+if File.exists?(app_env)
+  require 'dotenv'
+  Dotenv.load
+end
 
 ##
 # ## Enable devel logging
