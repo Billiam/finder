@@ -39,6 +39,7 @@ group :test do
 end
 
 group :development, :test do
+  gem 'dotenv'
   gem 'rspec'
   gem "mongoid-rspec", "~> 1.9.0"
   gem 'factory_girl'
