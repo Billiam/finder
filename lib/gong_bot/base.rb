@@ -90,7 +90,7 @@ module GongBot
 
       messages = client.get_messages('unread', {
         mark: true,
-        limit: 50
+        limit: 25
       })
 
       if messages.success?
