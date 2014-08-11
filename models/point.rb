@@ -15,7 +15,7 @@ class Point
 
   geo_field :location, delegate: true
 
-  field :status, type: String, default: 'pending'
+  field :status, type: String, default: 'approved'
 
   field :country, type: String
   field :county, type: String
