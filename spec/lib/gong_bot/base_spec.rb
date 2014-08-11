@@ -130,8 +130,8 @@ describe GongBot::Base do
           bot.fetch_messages
         end
 
-        it "requests batches of 50 messages" do
-          expect(client).to receive(:get_messages).with('unread', hash_including(limit: 50))
+        it "requests batches of 25 messages" do
+          expect(client).to receive(:get_messages).with('unread', hash_including(limit: 25))
           bot.fetch_messages
         end
       end
