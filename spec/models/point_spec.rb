@@ -12,7 +12,7 @@ describe Point, type: :model do
     )
   end
 
-  it { should have_field(:status).of_type(String).with_default_value_of('pending') }
+  it { should have_field(:status).of_type(String).with_default_value_of('approved') }
 
   context "as moderator" do
     it { should allow_mass_assignment_of(:status).as(:moderator) }
