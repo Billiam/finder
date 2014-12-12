@@ -1,8 +1,39 @@
 require 'spec_helper'
 
 describe GongBot::Base do
-  let (:pm) { {'data' => {'name' => 'id_1234', 'author' => 'user', 'body' => 'content', 'created_utc' => 1385683200}} }
-  let (:comment) { {'data' => {'name' => 'id_5678', 'author' => 'user', 'body' => 'content', 'created_utc' => 1385683200, 'was_comment' => true}} }
+  let (:client) do
+    nil
+  end
+
+  def pm_factory(data)
+    Redd::Object::PrivateMessage.new client, data
+  end
+
+  let (:pm) do
+    pm_factory({
+      kind: 't4',
+      data: {
+        name: 'id_1234',
+        author: 'user',
+        body: 'content',
+        created_utc: 1385683200
+      }
+    })
+  end
+
+  let (:comment) do
+    pm_factory({
+      kind: 't4',
+      data: {
+        name: 'id_5678',
+        author: 'user',
+        body: 'content',
+        created_utc: 1385683200,
+        was_comment: true,
+      }
+    })
+  end
+
   let (:formatted_pm) do
     {
       author: 'user',
@@ -10,7 +41,6 @@ describe GongBot::Base do
       date: Time.parse('2013-11-29'),
     }
   end
-
 
   describe ".is_remove?" do
     context 'when message contains "remove"' do
@@ -95,18 +125,18 @@ describe GongBot::Base do
       bot
     end
 
+    let(:results) do
+      []
+    end
+
     let(:client) do
-      client = double("Snoo::Client").as_null_object
-      client.stub(:get_messages) { results }
+      client = double("Redd::Client::Authenticated").as_null_object
+      client.stub(:messages) { results }
       client
     end
 
     let(:log) do
       double("Logger").as_null_object
-    end
-
-    let(:results) do
-      double("messages").as_null_object
     end
 
     describe "#fetch_messages" do
@@ -121,27 +151,24 @@ describe GongBot::Base do
         end
 
         it "requests messages from client" do
-          expect(client).to receive(:get_messages)
+          expect(client).to receive(:messages)
           bot.fetch_messages
         end
 
         it "marks inbox as read" do
-          expect(client).to receive(:get_messages).with('unread', hash_including(mark: true))
+          expect(client).to receive(:messages).with('unread', true, anything)
           bot.fetch_messages
         end
 
         it "requests batches of 25 messages" do
-          expect(client).to receive(:get_messages).with('unread', hash_including(limit: 25))
+          expect(client).to receive(:messages).with(anything, anything, hash_including(limit: 25))
           bot.fetch_messages
         end
       end
 
       context 'when connecting successfully' do
         let(:results) do
-          message = super()
-          message.stub(:success?) { true }
-          message.stub(:[]).with('data').and_return({'children' => inbox_messages})
-          message
+          inbox_messages
         end
 
         it "returns inbox messages" do
@@ -149,7 +176,7 @@ describe GongBot::Base do
         end
 
         it "marks messages as read" do
-          expect(client).to receive(:mark_read).with('id_1234')
+          expect(client).to receive(:mark_many_read).with(inbox_messages)
           bot.fetch_messages
         end
 
@@ -161,16 +188,12 @@ describe GongBot::Base do
 
       context 'when unable to connect' do
         let(:results) do
-          message = super()
-
-          message.stub(:success?) { false }
-          message.stub(:code) { 21 }
-          message
+          nil
         end
 
         it "warns on failure" do
           expect(log).to receive(:warn) do |message|
-            expect(message).to include('received 21')
+            expect(message).to include('Unable to fetch messages')
           end
           bot.fetch_messages
         end
@@ -182,15 +205,27 @@ describe GongBot::Base do
     end
 
     describe '#read' do
-      let(:messages) do
+      let(:message_data) do
         [
-          {'data' => {'name' => 'id_abcd'}},
-          {'data' => {'name' => 'id_efgh'}},
+          {
+          kind: 't4',
+            data: {
+              body: 'Test, US',
+              was_comment: false,
+              author: 'user1',
+              kind: 't4',
+              name: 'id_abcd',
+            }
+          }
         ]
       end
 
+      let(:messages) do
+        message_data.map { |d| pm_factory(d) }
+      end
+
       it 'marks client messages as read' do
-        expect(client).to receive(:mark_read).with('id_abcd,id_efgh')
+        expect(client).to receive(:mark_many_read).with(messages)
         bot.read messages
       end
     end
@@ -252,60 +287,36 @@ describe GongBot::Base do
       end
 
       let(:client_class) do
-        ::Snoo::Client
+        ::Redd::Client::Authenticated
       end
 
       context 'when first called' do
         it 'sets the client username' do
-          expect(client_class).to receive(:new).with(hash_including(username: 'username'))
+          expect(client_class).to receive(:new_from_credentials).with('username', anything, anything)
           bot.client
         end
 
         it 'sets the client password' do
-          expect(client_class).to receive(:new).with(hash_including(password: 'password'))
+          expect(client_class).to receive(:new_from_credentials).with(anything, 'password', anything)
           bot.client
         end
 
         it 'sets the user agent' do
-          expect(client_class).to receive(:new).with(hash_including(useragent: 'useragent'))
+          expect(client_class).to receive(:new_from_credentials).with(anything, anything, hash_including(user_agent: 'useragent'))
           bot.client
         end
       end
 
       context 'when called a second time' do
         before(:each) do
-          bot.client
+          client_class.stub(:new_from_credentials).and_return(double("client"))
         end
 
         it 'memoizes the generated client' do
-          expect(client_class).not_to receive(:new)
+          expect(client_class).to receive(:new_from_credentials).once
+
           bot.client
-        end
-      end
-    end
-
-    describe '#logged_in?' do
-      context 'client logged in' do
-        let(:client) do
-          client = super()
-          client.stub(:logged_in?) { true }
-          client
-        end
-
-        it 'is true' do
-          expect(bot.logged_in?).to be_true
-        end
-      end
-
-      context 'client not logged in' do
-        let(:client) do
-          client = super()
-          client.stub(:logged_in?).and_raise(Snoo::NotAuthenticated)
-          client
-        end
-
-        it 'is false' do
-          expect(bot.logged_in?).to be_false
+          bot.client
         end
       end
     end
