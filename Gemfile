@@ -18,7 +18,7 @@ gem 'erubis', '~> 2.7.0'
 gem 'mongoid', '~> 3.1.5'
 gem "mongoid_geospatial", "~> 2.8.2"
 
-gem 'snoo', require: false
+gem 'redd', '~> 0.6.5', require: false
 gem 'httparty', require: false
 #required to resolve mongoid geospatial vs padrino dependencies
 gem "activesupport", "~> 3.2.15", require: false

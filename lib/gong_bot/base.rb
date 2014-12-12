@@ -1,4 +1,4 @@
-require 'snoo'
+require 'redd'
 
 module GongBot
   class Base
@@ -33,15 +33,14 @@ module GongBot
     end
 
     def self.filter_pms messages
-      messages.reject { |m| !m.has_key?('data') || m['data']['was_comment'] }
+      messages.reject(&:was_comment?)
     end
 
     def self.format_message message
-      data = message['data']
       {
-          author: data['author'],
-          message: data['body'],
-          date: Time.at(data['created_utc'])
+        author: message.author,
+        message: message.body,
+        date: message.created
       }
     end
 
@@ -56,20 +55,12 @@ module GongBot
     end
 
     def client
-      @client ||= ::Snoo::Client.new({
-        username: Configuration::BOT_USERNAME,
-        password: Configuration::BOT_PASSWORD,
-        useragent: Configuration::BOT_USERAGENT,
-      })
-    end
+      @client ||= ::Redd::Client::Authenticated.new_from_credentials(
+        Configuration::BOT_USERNAME,
+        Configuration::BOT_PASSWORD,
 
-    def logged_in?
-      begin
-        self.client.logged_in?
-        true
-      rescue Snoo::NotAuthenticated => e
-        false
-      end
+        user_agent: Configuration::BOT_USERAGENT,
+      )
     end
 
     def inbox_requests
@@ -82,23 +73,22 @@ module GongBot
 
       loggy.debug "Marking #{messages.count} as read"
 
-      client.mark_read messages.map{ |m| m['data']['name'] }.join(',')
+      client.mark_many_read messages
     end
 
     def fetch_messages
       loggy.info 'Fetching info messages'
 
-      messages = client.get_messages('unread', {
-        mark: true,
+      messages = client.messages('unread', true, {
         limit: 25
       })
 
-      if messages.success?
-        filtered_messages = self.class.filter_pms messages['data']['children']
+      if messages
+        filtered_messages = self.class.filter_pms messages
         self.read filtered_messages
         return filtered_messages
       else
-        loggy.warn "Unable to fetch messages, received #{messages.code}"
+        loggy.warn "Unable to fetch messages"
       end
 
       []
